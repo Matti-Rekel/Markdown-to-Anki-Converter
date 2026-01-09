@@ -1,3 +1,7 @@
+# Projekt spezifisch
+
+*.txt
+
 # Java files
 
 *.class
