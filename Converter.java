@@ -243,10 +243,10 @@ public class Converter{
         card[2] = card[2].replaceAll("\\$(.+?)\\$","\\\\($1\\\\)");
 
         //bold
-        card[2] = card[2].replaceAll("\\*\\*(.+?)\\*\\*","<span style=\"color:limegreen;\">$1</span>");
+        card[2] = card[2].replaceAll("\\*\\*(.+?)\\*\\*","<span style=\"\"color:limegreen;\"\">$1</span>");
 
         //italics
-        card[2] = card[2].replaceAll("\\*(.+?)\\*","<span style=\"color:steelblue;\">$1</span>");
+        card[2] = card[2].replaceAll("\\*(.+?)\\*","<span style=\"\"color:steelblue;\"\">$1</span>");
 
         // Formating Tags
         card[4] = card[4].replaceFirst("Tags", " ");
