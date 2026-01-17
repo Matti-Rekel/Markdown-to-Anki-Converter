@@ -10,8 +10,8 @@ public class Converter{
 
     static File createFile (File inputFile){
         try {
-            File outputFile = new File("F:\\Programmieren\\Projekte\\Java\\Anki_Converter\\Anki_Files\\"+ inputFile.getName()+ ".txt"); // Create File object
-            if (outputFile.createNewFile()) {           // Try to create the file
+            File outputFile = new File("Anki_Files\\"+ inputFile.getName()+ ".txt"); // Create File object
+            if (outputFile.createNewFile()) { // Try to create the file
                   System.out.println("File created: " + outputFile.getName());
             } else {
               System.out.println("File already exists.");
@@ -146,6 +146,7 @@ public class Converter{
         // Formating the Question correctly
         card[0] = card[0].substring(3);
         card[0] = card[0].trim();
+        card[0] = card[0].replaceAll("\\$(.+?)\\$","\\\\($1\\\\)");
         
 
         // Formating the answer
@@ -187,7 +188,6 @@ public class Converter{
                 splitAnswer[lineListStart] = splitAnswer[lineListStart].replaceFirst("-", "<ul>  <li>");
                 while(lineListStart <= lineListEnd){
                     splitAnswer[lineListStart] = splitAnswer[lineListStart].replaceFirst("-", "<li>");
-                    //splitAnswer[lineListStart] = splitAnswer[lineListStart] + "</li>";
                     lineListStart++;
                 }
                 splitAnswer[lineListEnd] = splitAnswer[lineListEnd] + "</ul>";
@@ -238,10 +238,23 @@ public class Converter{
         //italics
         answer = answer.replaceAll("\\*(.+?)\\*","<span style=\"\"color:steelblue;\"\">$1</span>");
         
+
+        // Formating Information
+        card[2] = card[2].replaceAll("\\$(.+?)\\$","\\\\($1\\\\)");
+
+        //bold
+        card[2] = card[2].replaceAll("\\*\\*(.+?)\\*\\*","<span style=\"color:limegreen;\">$1</span>");
+
+        //italics
+        card[2] = card[2].replaceAll("\\*(.+?)\\*","<span style=\"color:steelblue;\">$1</span>");
+
+        // Formating Tags
         card[4] = card[4].replaceFirst("Tags", " ");
         card[4] = card[4].replaceAll("\\W", " ");
 
         card[1] = answer;
+
+        
         
         
         return card;
@@ -259,7 +272,7 @@ public class Converter{
     public static void main(String[] args){
         File inputFile = new File(args[0]); // Takes the first Argument and takes it as the input File
         File outputFile = createFile(inputFile); // generating an output File
-        setUpFile(outputFile); // adds basic syntax at begining of txt file
+        setUpFile(outputFile); // adds basic syntax at begining of .txt file
         readFile(inputFile, outputFile);
     }
 }
