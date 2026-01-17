@@ -233,10 +233,10 @@ public class Converter{
         // Font changes in HTML
 
         //bold
-        answer = answer.replaceAll("\\*\\*(.+?)\\*\\*","<span style=\"color:limegreen;\">$1</span>");
+        answer = answer.replaceAll("\\*\\*(.+?)\\*\\*","<span style=\"\"color:limegreen;\"\">$1</span>");
 
         //italics
-        answer = answer.replaceAll("\\*(.+?)\\*","<span style=\"color:steelblue;\">$1</span>");
+        answer = answer.replaceAll("\\*(.+?)\\*","<span style=\"\"color:steelblue;\"\">$1</span>");
         
         card[4] = card[4].replaceFirst("Tags", " ");
         card[4] = card[4].replaceAll("\\W", " ");
