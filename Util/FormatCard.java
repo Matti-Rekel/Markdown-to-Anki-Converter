@@ -10,17 +10,13 @@ public abstract class FormatCard{
         // Formating the Question correctly
         card[0] = card[0].substring(3);
         card[0] = card[0].trim();
-        card[0] = card[0].replaceAll("\\$(.+?)\\$","\\\\($1\\\\)");
+        card[0] = mathMode(card[0]);
         
 
         // Formating the answer
         String answer  = card[1];
 
-        // Auto placing math-mode
-        while(answer.contains("$")){
-            answer = answer.replaceFirst("\\$", "\\\\(" );
-            answer = answer.replaceFirst("\\$", "\\\\)" );
-        }
+        answer = mathMode(answer);
 
         // orderd and unorderd lists in HTML
         String[] splitAnswer = answer.split("\n");
@@ -104,7 +100,7 @@ public abstract class FormatCard{
         
 
         // Formating Information
-        card[2] = card[2].replaceAll("\\$(.+?)\\$","\\\\($1\\\\)");
+        card[2] = mathMode(card[2]);
 
         //bold
         card[2] = card[2].replaceAll("\\*\\*(.+?)\\*\\*","<span style=\"\"color:limegreen;\"\">$1</span>");
@@ -122,5 +118,9 @@ public abstract class FormatCard{
         
         
         return card;
+    }
+
+    private static String mathMode(String field){
+        return field = field.replaceAll("\\$(.+?)\\$","\\\\($1\\\\)");
     }
 }
