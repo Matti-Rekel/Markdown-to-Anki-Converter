@@ -146,8 +146,6 @@ public class Converter{
         return card;
     }
 
-    
-
     static void writeCard(String note, File outputFile){
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile.getAbsolutePath(), true))) {
             bw.newLine();

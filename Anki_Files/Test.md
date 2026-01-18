@@ -1,3 +1,4 @@
+# Folgen
 
 ### Was ist eine Folge?
 
@@ -5,6 +6,9 @@ Unter einer **Folge** (mit *Werten* in K) versteht man eine Abbildung von \(\mat
 - a
 - b
 - c
+$$ a = 5$$
+
+<!--cloze:1-->
 
 text
 1. d
@@ -18,15 +22,21 @@ Tags: Rekursion, Kerstin
 
 ### test
 
-bla
+ <a href="https://www.w3schools.com/">Visit W3Schools.com!</a> 
 
 ````java
-public class Main(){
+public class **Main**(){
     public static void main (String[] args){
-        System.out.println("Dies ist ein Test");
+        System.out.println("Dies ist ein test");
     }
-
 }
 ````
+
+Genau so sollte es Sein
+
+````java
+blablabla
+````
+
 
 Quelle: 2025.11.07_Vorlesung_Folgen

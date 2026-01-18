@@ -14,30 +14,23 @@ public abstract class FormatCard{
         
 
         // Formating the answer
-        String answer  = card[1];
-
-        answer = mathMode(answer);
-
-        answer = lists(answer);
-
-
-        // Font changes in HTML
-        answer = fonts(answer);
-        answer = code(answer);
+        card[1] = htmlConform(card[1]);
+        card[1] = mathMode(card[1]);
+        card[1] = lists(card[1]);
+        card[1] = highlight(card[1]);
+        card[1] = code(card[1]);
         
 
         // Formating Information
+        card[2] = htmlConform(card[2]);
         card[2] = mathMode(card[2]);
-        card[2] = fonts(card[2]);
+        card[2] = lists(card[2]);
+        card[2] = highlight(card[2]);
+        card[2] = code(card[2]);
 
         // Formating Tags
         card[4] = card[4].replaceFirst("Tags", " ");
         card[4] = card[4].replaceAll("\\W", " ");
-
-        card[1] = answer;
-
-        
-        
         
         return card;
     }
@@ -55,23 +48,30 @@ public abstract class FormatCard{
         return note;
     }
 
-    private static String mathMode(String field){
-        return field = field.replaceAll("\\$(.+?)\\$","\\\\($1\\\\)");
+    private static String htmlConform(String field){
+        field = field.replaceAll("\n", "<br>");
+
+        return field;
     }
 
-    private static String fonts(String field){
+    private static String mathMode(String field){
+        field = field.replaceAll("\\$\\$(.+?)\\$\\$","<div class =\"math\"><anki-mathjax block=\"true\">$1</anki-mathjax></div>");
+        return field = field.replaceAll("\\$(.+?)\\$","<span class =\"math\"><anki-mathjax>$1</anki-mathjax></span>");
+    }
+
+    private static String highlight(String field){
         //bold
-        field = field.replaceAll("\\*\\*(.+?)\\*\\*","<span style=\"color:limegreen;\">$1</span>");
+        field = field.replaceAll("\\*\\*(.+?)\\*\\*","<span class=\"highlight1\">$1</span>");
 
         //italics
-        field = field.replaceAll("\\*(.+?)\\*","<span style=\"color:steelblue;\">$1</span>");
+        field = field.replaceAll("\\*(.+?)\\*","<span class=\"highlight2\">$1</span>");
 
         return field;
     }
 
     private static String lists(String field){
         // orderd and unorderd lists in HTML
-        String[] splitField = field.split("\n");
+        String[] splitField = field.split("<br>");
 
         for(int i = 0; i < splitField.length; i++){
             int lineListStart = 0;
@@ -139,7 +139,7 @@ public abstract class FormatCard{
     }
 
     private static String code(String field){
-        field = field.replace("````java", "<pre style=\"background:#f6f8fa; padding:12px; border-radius:6px;font-family: Arial;\">");
+        field = field.replace("````java<br>", "<pre class=\"code\">");
         field = field.replace("````", "</pre>");
 
         return field;
