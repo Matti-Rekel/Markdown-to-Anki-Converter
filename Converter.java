@@ -42,7 +42,7 @@ public class Converter{
         }
     }
 
-    static void readFile (File inputFile, File outputFile, char separator){
+    static void convertFile (File inputFile, File outputFile, char separator){
         try (BufferedReader br = new BufferedReader(new FileReader(inputFile.getAbsolutePath()))) {
             String currentLine;
             int line = 0;
@@ -162,7 +162,7 @@ public class Converter{
         File inputFile = new File(args[0]); // Takes the first Argument and takes it as the input File
         File outputFile = createFile(inputFile); // generating an output File
         setUpFile(outputFile, separator); // adds basic syntax at begining of .txt file
-        readFile(inputFile, outputFile, separator);
+        convertFile(inputFile, outputFile, separator);
         System.out.println("Es wurden " + cardCounter + " Karten gefunden");
     }
 }
