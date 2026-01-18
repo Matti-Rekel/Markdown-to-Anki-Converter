@@ -10,6 +10,8 @@ import Util.FormatCard;
 
 public class Converter{
 
+    static int cardCounter = -1;
+
     static File createFile (File inputFile){
         try {
             File outputFile = new File("Anki_Files\\"+ inputFile.getName()+ ".txt"); // Create File object
@@ -27,18 +29,20 @@ public class Converter{
         return null;
     }
 
-    static void setUpFile (File outputFile){
+    static void setUpFile (File outputFile, char separator){
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile.getAbsolutePath()))) {
-            bw.write("#separator:|");
+            bw.write("#separator:" + separator);
             bw.newLine();  // add line break
             bw.write("#notetype:Zusatzinfo_(Automatisieren)");
+            bw.newLine();
+            bw.write("#html:true");
             bw.newLine();
         } catch (IOException e) {
             System.out.println("Error writing file.");
         }
     }
 
-    static void readFile (File inputFile, File outputFile){
+    static void readFile (File inputFile, File outputFile, char separator){
         try (BufferedReader br = new BufferedReader(new FileReader(inputFile.getAbsolutePath()))) {
             String currentLine;
             int line = 0;
@@ -48,18 +52,17 @@ public class Converter{
             while ((currentLine = br.readLine()) != null) {
                 if(!currentLine.isEmpty() && currentLine.startsWith("###")){
                     endingCard = line;
-                    System.out.println(beginingCard + " - " + endingCard);
                     String[] card = extractCard(beginingCard, endingCard, inputFile);
-                    writeCard(card, outputFile);
+                    String note = FormatCard.formatNote(card, separator);
+                    writeCard(note, outputFile);
                     beginingCard = endingCard+1;
                 }
                 line++;
             }
             endingCard = line;
-            System.out.println(beginingCard + " - " + endingCard);
             String[] card = extractCard(beginingCard, endingCard, inputFile);
-            writeCard(card, outputFile);
-            System.out.println("");
+            String note = FormatCard.formatNote(card, separator);
+            writeCard(note, outputFile);
 
         } catch (IOException e) {
             System.out.println("Error reading file.");
@@ -67,6 +70,9 @@ public class Converter{
     }
 
     static String[] extractCard(int beginingCard, int endingCard, File inputFile){
+
+        cardCounter +=1;
+
         String[] card = new String[5];
         String question = "";
         String anwser = "";
@@ -142,19 +148,21 @@ public class Converter{
 
     
 
-    static void writeCard(String[] card, File outputFile){
+    static void writeCard(String note, File outputFile){
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile.getAbsolutePath(), true))) {
             bw.newLine();
-            bw.write("\"" + card[0] +"\"" + "|" +"\"" + card[1] +"\"" + "|" +"\"" + card[2] +"\"" + "|" +"\"" + card[3] + "\"" + "|" +"\"" + card[4] + "\"");
+            bw.write(note);
         } catch (IOException e) {
             System.out.println("Error writing file.");
         }
     }
 
     public static void main(String[] args){
+        char separator = ';'; 
         File inputFile = new File(args[0]); // Takes the first Argument and takes it as the input File
         File outputFile = createFile(inputFile); // generating an output File
-        setUpFile(outputFile); // adds basic syntax at begining of .txt file
-        readFile(inputFile, outputFile);
+        setUpFile(outputFile, separator); // adds basic syntax at begining of .txt file
+        readFile(inputFile, outputFile, separator);
+        System.out.println("Es wurden " + cardCounter + " Karten gefunden");
     }
 }

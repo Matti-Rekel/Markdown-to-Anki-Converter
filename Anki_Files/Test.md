@@ -20,4 +20,13 @@ Tags: Rekursion, Kerstin
 
 bla
 
+````java
+public class Main(){
+    public static void main (String[] args){
+        System.out.println("Dies ist ein **Test**");
+    }
+
+}
+````
+
 Quelle: 2025.11.07_Vorlesung_Folgen

@@ -23,6 +23,7 @@ public abstract class FormatCard{
 
         // Font changes in HTML
         answer = fonts(answer);
+        answer = code(answer);
         
 
         // Formating Information
@@ -39,6 +40,19 @@ public abstract class FormatCard{
         
         
         return card;
+    }
+
+    public static String formatNote(String[] card, char separator){
+        String note = "";
+
+        card[0] = card[0].replaceAll("\"", "\"\"");
+        card[1] = card[1].replaceAll("\"", "\"\"");
+        card[2] = card[2].replaceAll("\"", "\"\"");
+        card[3] = card[3].replaceAll("\"", "\"\"");
+        card[4] = card[4].replaceAll("\"", "\"\"");
+
+        note = "\"" + card[0] + "\"" + separator + "\"" + card[1] + "\"" + separator + "\"" + card[2] + "\"" + separator +"\"" + card[3] + "\"" + separator +"\"" + card[4] + "\"";
+        return note;
     }
 
     private static String mathMode(String field){
@@ -71,7 +85,6 @@ public abstract class FormatCard{
 
             // Unorderd List
             if(!splitField[i].isEmpty() && splitField[i].charAt(0) == '-'){
-                System.out.println("list found");
                 lineListStart = i;
                 lineListEnd = i -1;
                 while(i < splitField.length && !splitField[i].isEmpty() && splitField[i].charAt(0) == '-'){
@@ -79,8 +92,6 @@ public abstract class FormatCard{
                     lineListEnd++;
                 }
 
-                
-                System.out.println(lineListStart + " " + lineListEnd);
 
 
                 splitField[lineListStart] = splitField[lineListStart].replaceFirst("-", "<ul>  <li>");
@@ -96,7 +107,6 @@ public abstract class FormatCard{
             
             // Orderd List
             if(i < splitField.length &&!splitField[i].isEmpty() && splitField[i].startsWith("1.")){
-                System.out.println("list found");
                 lineListStart = i;
                 lineListEnd = i -1;
                 while(i < splitField.length && !splitField[i].isEmpty() && splitField[i].charAt(1) == '.'){
@@ -105,7 +115,6 @@ public abstract class FormatCard{
                 }
 
                 
-                System.out.println(lineListStart + " " + lineListEnd);
 
 
                 splitField[lineListStart] = splitField[lineListStart].replaceFirst("1.", "<ol>  <li>");
@@ -128,4 +137,12 @@ public abstract class FormatCard{
         }
         return field;
     }
+
+    private static String code(String field){
+        field = field.replace("````java", "<pre style=\"background:#f6f8fa; padding:12px; border-radius:6px;font-family: Arial;\">");
+        field = field.replace("````", "</pre>");
+
+        return field;
+    }
+
 }
