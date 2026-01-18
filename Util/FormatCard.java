@@ -91,22 +91,12 @@ public abstract class FormatCard{
 
 
         // Font changes in HTML
-
-        //bold
-        answer = answer.replaceAll("\\*\\*(.+?)\\*\\*","<span style=\"\"color:limegreen;\"\">$1</span>");
-
-        //italics
-        answer = answer.replaceAll("\\*(.+?)\\*","<span style=\"\"color:steelblue;\"\">$1</span>");
+        answer = fonts(answer);
         
 
         // Formating Information
         card[2] = mathMode(card[2]);
-
-        //bold
-        card[2] = card[2].replaceAll("\\*\\*(.+?)\\*\\*","<span style=\"\"color:limegreen;\"\">$1</span>");
-
-        //italics
-        card[2] = card[2].replaceAll("\\*(.+?)\\*","<span style=\"\"color:steelblue;\"\">$1</span>");
+        card[2] = fonts(card[2]);
 
         // Formating Tags
         card[4] = card[4].replaceFirst("Tags", " ");
@@ -122,5 +112,15 @@ public abstract class FormatCard{
 
     private static String mathMode(String field){
         return field = field.replaceAll("\\$(.+?)\\$","\\\\($1\\\\)");
+    }
+
+    private static String fonts(String field){
+        //bold
+        field = field.replaceAll("\\*\\*(.+?)\\*\\*","<span style=\"color:limegreen;\">$1</span>");
+
+        //italics
+        field = field.replaceAll("\\*(.+?)\\*","<span style=\"color:steelblue;\">$1</span>");
+
+        return field;
     }
 }
