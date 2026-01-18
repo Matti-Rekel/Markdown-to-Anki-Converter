@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 
+import Util.FormatCard;
+
 public class Converter{
 
     static File createFile (File inputFile){
@@ -133,132 +135,12 @@ public class Converter{
         card[3] = source;
         card[4] = tags;
 
-        card = formatCard(card);
+        card = FormatCard.formatCard(card);
 
         return card;
     }
 
-    static String[] formatCard(String[] card){
-        if (card[0].isEmpty()){
-            return card;
-        }     
-
-        // Formating the Question correctly
-        card[0] = card[0].substring(3);
-        card[0] = card[0].trim();
-        card[0] = card[0].replaceAll("\\$(.+?)\\$","\\\\($1\\\\)");
-        
-
-        // Formating the answer
-        String answer  = card[1];
-
-        // Auto placing math-mode
-        while(answer.contains("$")){
-            answer = answer.replaceFirst("\\$", "\\\\(" );
-            answer = answer.replaceFirst("\\$", "\\\\)" );
-        }
-
-        // orderd and unorderd lists in HTML
-        String[] splitAnswer = answer.split("\n");
-
-        for(int i = 0; i < splitAnswer.length; i++){
-            int lineListStart = 0;
-            int lineListEnd = 0;
-
-            // remove # Lines
-            if(!splitAnswer[i].isEmpty() && splitAnswer[i].charAt(0) == '#'){
-                splitAnswer[i] = "";
-            }
-
-
-            // Unorderd List
-            if(!splitAnswer[i].isEmpty() && splitAnswer[i].charAt(0) == '-'){
-                System.out.println("list found");
-                lineListStart = i;
-                lineListEnd = i -1;
-                while(i < splitAnswer.length && !splitAnswer[i].isEmpty() && splitAnswer[i].charAt(0) == '-'){
-                    i++;
-                    lineListEnd++;
-                }
-
-                
-                System.out.println(lineListStart + " " + lineListEnd);
-
-
-                splitAnswer[lineListStart] = splitAnswer[lineListStart].replaceFirst("-", "<ul>  <li>");
-                while(lineListStart <= lineListEnd){
-                    splitAnswer[lineListStart] = splitAnswer[lineListStart].replaceFirst("-", "<li>");
-                    lineListStart++;
-                }
-                splitAnswer[lineListEnd] = splitAnswer[lineListEnd] + "</ul>";
-
-
-            }
-
-            
-            // Orderd List
-            if(i < splitAnswer.length &&!splitAnswer[i].isEmpty() && splitAnswer[i].startsWith("1.")){
-                System.out.println("list found");
-                lineListStart = i;
-                lineListEnd = i -1;
-                while(i < splitAnswer.length && !splitAnswer[i].isEmpty() && splitAnswer[i].charAt(1) == '.'){
-                    i++;
-                    lineListEnd++;
-                }
-
-                
-                System.out.println(lineListStart + " " + lineListEnd);
-
-
-                splitAnswer[lineListStart] = splitAnswer[lineListStart].replaceFirst("1.", "<ol>  <li>");
-                lineListStart++;
-                while(lineListStart <= lineListEnd){
-                    splitAnswer[lineListStart] = splitAnswer[lineListStart].replaceFirst(splitAnswer[lineListStart].charAt(0) + ".", "<li>");
-                    splitAnswer[lineListStart] = splitAnswer[lineListStart] + "</li>";
-                    lineListStart++;
-                }
-                splitAnswer[lineListEnd] = splitAnswer[lineListEnd] + "</ol>";
-
-
-            }
-        }
-
-        // making the Array a String again
-        answer = "";
-        for(int i = 0; i < splitAnswer.length; i++){
-            answer = answer + splitAnswer[i] + "<br>";
-        }
-
-
-        // Font changes in HTML
-
-        //bold
-        answer = answer.replaceAll("\\*\\*(.+?)\\*\\*","<span style=\"\"color:limegreen;\"\">$1</span>");
-
-        //italics
-        answer = answer.replaceAll("\\*(.+?)\\*","<span style=\"\"color:steelblue;\"\">$1</span>");
-        
-
-        // Formating Information
-        card[2] = card[2].replaceAll("\\$(.+?)\\$","\\\\($1\\\\)");
-
-        //bold
-        card[2] = card[2].replaceAll("\\*\\*(.+?)\\*\\*","<span style=\"\"color:limegreen;\"\">$1</span>");
-
-        //italics
-        card[2] = card[2].replaceAll("\\*(.+?)\\*","<span style=\"\"color:steelblue;\"\">$1</span>");
-
-        // Formating Tags
-        card[4] = card[4].replaceFirst("Tags", " ");
-        card[4] = card[4].replaceAll("\\W", " ");
-
-        card[1] = answer;
-
-        
-        
-        
-        return card;
-    }
+    
 
     static void writeCard(String[] card, File outputFile){
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile.getAbsolutePath(), true))) {
