@@ -18,76 +18,7 @@ public abstract class FormatCard{
 
         answer = mathMode(answer);
 
-        // orderd and unorderd lists in HTML
-        String[] splitAnswer = answer.split("\n");
-
-        for(int i = 0; i < splitAnswer.length; i++){
-            int lineListStart = 0;
-            int lineListEnd = 0;
-
-            // remove # Lines
-            if(!splitAnswer[i].isEmpty() && splitAnswer[i].charAt(0) == '#'){
-                splitAnswer[i] = "";
-            }
-
-
-            // Unorderd List
-            if(!splitAnswer[i].isEmpty() && splitAnswer[i].charAt(0) == '-'){
-                System.out.println("list found");
-                lineListStart = i;
-                lineListEnd = i -1;
-                while(i < splitAnswer.length && !splitAnswer[i].isEmpty() && splitAnswer[i].charAt(0) == '-'){
-                    i++;
-                    lineListEnd++;
-                }
-
-                
-                System.out.println(lineListStart + " " + lineListEnd);
-
-
-                splitAnswer[lineListStart] = splitAnswer[lineListStart].replaceFirst("-", "<ul>  <li>");
-                while(lineListStart <= lineListEnd){
-                    splitAnswer[lineListStart] = splitAnswer[lineListStart].replaceFirst("-", "<li>");
-                    lineListStart++;
-                }
-                splitAnswer[lineListEnd] = splitAnswer[lineListEnd] + "</ul>";
-
-
-            }
-
-            
-            // Orderd List
-            if(i < splitAnswer.length &&!splitAnswer[i].isEmpty() && splitAnswer[i].startsWith("1.")){
-                System.out.println("list found");
-                lineListStart = i;
-                lineListEnd = i -1;
-                while(i < splitAnswer.length && !splitAnswer[i].isEmpty() && splitAnswer[i].charAt(1) == '.'){
-                    i++;
-                    lineListEnd++;
-                }
-
-                
-                System.out.println(lineListStart + " " + lineListEnd);
-
-
-                splitAnswer[lineListStart] = splitAnswer[lineListStart].replaceFirst("1.", "<ol>  <li>");
-                lineListStart++;
-                while(lineListStart <= lineListEnd){
-                    splitAnswer[lineListStart] = splitAnswer[lineListStart].replaceFirst(splitAnswer[lineListStart].charAt(0) + ".", "<li>");
-                    splitAnswer[lineListStart] = splitAnswer[lineListStart] + "</li>";
-                    lineListStart++;
-                }
-                splitAnswer[lineListEnd] = splitAnswer[lineListEnd] + "</ol>";
-
-
-            }
-        }
-
-        // making the Array a String again
-        answer = "";
-        for(int i = 0; i < splitAnswer.length; i++){
-            answer = answer + splitAnswer[i] + "<br>";
-        }
+        answer = lists(answer);
 
 
         // Font changes in HTML
@@ -121,6 +52,80 @@ public abstract class FormatCard{
         //italics
         field = field.replaceAll("\\*(.+?)\\*","<span style=\"color:steelblue;\">$1</span>");
 
+        return field;
+    }
+
+    private static String lists(String field){
+        // orderd and unorderd lists in HTML
+        String[] splitField = field.split("\n");
+
+        for(int i = 0; i < splitField.length; i++){
+            int lineListStart = 0;
+            int lineListEnd = 0;
+
+            // remove # Lines
+            if(!splitField[i].isEmpty() && splitField[i].charAt(0) == '#'){
+                splitField[i] = "";
+            }
+
+
+            // Unorderd List
+            if(!splitField[i].isEmpty() && splitField[i].charAt(0) == '-'){
+                System.out.println("list found");
+                lineListStart = i;
+                lineListEnd = i -1;
+                while(i < splitField.length && !splitField[i].isEmpty() && splitField[i].charAt(0) == '-'){
+                    i++;
+                    lineListEnd++;
+                }
+
+                
+                System.out.println(lineListStart + " " + lineListEnd);
+
+
+                splitField[lineListStart] = splitField[lineListStart].replaceFirst("-", "<ul>  <li>");
+                while(lineListStart <= lineListEnd){
+                    splitField[lineListStart] = splitField[lineListStart].replaceFirst("-", "<li>");
+                    lineListStart++;
+                }
+                splitField[lineListEnd] = splitField[lineListEnd] + "</ul>";
+
+
+            }
+
+            
+            // Orderd List
+            if(i < splitField.length &&!splitField[i].isEmpty() && splitField[i].startsWith("1.")){
+                System.out.println("list found");
+                lineListStart = i;
+                lineListEnd = i -1;
+                while(i < splitField.length && !splitField[i].isEmpty() && splitField[i].charAt(1) == '.'){
+                    i++;
+                    lineListEnd++;
+                }
+
+                
+                System.out.println(lineListStart + " " + lineListEnd);
+
+
+                splitField[lineListStart] = splitField[lineListStart].replaceFirst("1.", "<ol>  <li>");
+                lineListStart++;
+                while(lineListStart <= lineListEnd){
+                    splitField[lineListStart] = splitField[lineListStart].replaceFirst(splitField[lineListStart].charAt(0) + ".", "<li>");
+                    splitField[lineListStart] = splitField[lineListStart] + "</li>";
+                    lineListStart++;
+                }
+                splitField[lineListEnd] = splitField[lineListEnd] + "</ol>";
+
+
+            }
+        }
+
+        // making the Array a String again
+        field = "";
+        for(int i = 0; i < splitField.length; i++){
+            field = field + splitField[i] + "<br>";
+        }
         return field;
     }
 }
