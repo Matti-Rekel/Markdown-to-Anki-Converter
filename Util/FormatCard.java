@@ -50,9 +50,8 @@ public abstract class FormatCard{
     }
 
     private static String htmlConform(String field){
-        field = field.replaceAll("\n", "<br>");
 
-        return field;
+        return field = (field.isEmpty() ?  "" :  field.replaceAll("\n", "<br>"));
     }
 
     private static String mathMode(String field){
@@ -72,6 +71,10 @@ public abstract class FormatCard{
 
     private static String lists(String field){
         // orderd and unorderd lists in HTML
+        if (field.isEmpty()){
+            return "";
+        }
+
         String[] splitField = field.split("<br>");
 
         for(int i = 0; i < splitField.length; i++){

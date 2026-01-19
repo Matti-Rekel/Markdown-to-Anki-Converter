@@ -42,3 +42,23 @@ blablabla
 
 
 Quelle: 2025.11.07_Vorlesung_Folgen
+
+# Klassen und Objekte
+
+### Was sind Objekte?
+
+Objekte sind eine Repräsentation eines realen Gegenstands, eines Sachverhaltes, oder eines rein gedanklichen Konzepts.
+
+### Durch was sind Objekte gekenzeichnet?
+
+Hinweis: Frag nicht.
+
+Identität und Eigenschaften.
+
+### Was zählt zu den Eigenschaften eines Objektes?
+
+Ihr Zustand in Form von Attributen und ihr Verhlaten in Form von Methoden.
+
+### Wie werden Objekte graphisch dargestellt?
+
+gar nicht

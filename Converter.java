@@ -105,13 +105,13 @@ public class Converter{
             
             question = br.readLine();
             
-            while(line <= endingCard && currentLine.isEmpty()){
+            while(line < endingCard && currentLine.isEmpty()){
                 currentLine = br.readLine();
                 line++;
             }
 
-            hint = currentLine.startsWith("Hinweis:") ? currentLine : "";
-            if(currentLine.startsWith("Hinweis:")){
+        
+            if(!currentLine.isEmpty() && currentLine.startsWith("Hinweis:")){
                 hint = currentLine;
                 currentLine = br.readLine();
             }
