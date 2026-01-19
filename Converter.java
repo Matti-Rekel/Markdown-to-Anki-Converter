@@ -33,7 +33,7 @@ public class Converter{
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile.getAbsolutePath()))) {
             bw.write("#separator:" + separator);
             bw.newLine();  // add line break
-            bw.write("#notetype:Zusatzinfo_(Automatisieren)");
+            bw.write("#notetype:Zusatzinfo_(Automatisieren)V_2");
             bw.newLine();
             bw.write("#html:true");
             bw.newLine();
@@ -73,8 +73,9 @@ public class Converter{
 
         cardCounter +=1;
 
-        String[] card = new String[5];
+        String[] card = new String[6];
         String question = "";
+        String hint = "";
         String anwser = "";
         String info = "";
         String source ="";
@@ -82,10 +83,11 @@ public class Converter{
 
         if(beginingCard == 1){
             card[0] = question;
-            card[1] = anwser;
-            card[2] = info;
-            card[3] = source;
-            card[4] = tags;
+            card[1] = hint;
+            card[2] = anwser;
+            card[3] = info;
+            card[4] = source;
+            card[5] = tags;
 
             return card;
         }
@@ -102,6 +104,17 @@ public class Converter{
             }
             
             question = br.readLine();
+            
+            while(line <= endingCard && currentLine.isEmpty()){
+                currentLine = br.readLine();
+                line++;
+            }
+
+            hint = currentLine.startsWith("Hinweis:") ? currentLine : "";
+            if(currentLine.startsWith("Hinweis:")){
+                hint = currentLine;
+                currentLine = br.readLine();
+            }
 
             while(line <= endingCard && (!currentLine.startsWith("Informationen:") && !currentLine.startsWith("Quelle:") && !currentLine.startsWith("Tags:"))){
                 anwser = anwser + currentLine + "\n";
@@ -136,10 +149,11 @@ public class Converter{
         }
 
         card[0] = question;
-        card[1] = anwser;
-        card[2] = info;
-        card[3] = source;
-        card[4] = tags;
+        card[1] = hint;
+        card[2] = anwser;
+        card[3] = info;
+        card[4] = source;
+        card[5] = tags;
 
         card = FormatCard.formatCard(card);
 

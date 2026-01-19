@@ -2,6 +2,8 @@
 
 ### Was ist eine Folge?
 
+Hinweis: bla
+
 Unter einer **Folge** (mit *Werten* in K) versteht man eine Abbildung von \(\mathbb{N}\) nach K. Jedem $n \in \mathbb{N}$ ist aber ein $a_n \in K$ zugeordnet. Man schreibt: $(a_n)_{n \in \mathbb{N}}$ oder $(a_0, a_1, a_2, ...)$, kurz $(a_n)$
 - a
 - b

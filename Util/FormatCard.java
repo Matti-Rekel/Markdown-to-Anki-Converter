@@ -14,23 +14,23 @@ public abstract class FormatCard{
         
 
         // Formating the answer
-        card[1] = htmlConform(card[1]);
-        card[1] = mathMode(card[1]);
-        card[1] = lists(card[1]);
-        card[1] = highlight(card[1]);
-        card[1] = code(card[1]);
-        
-
-        // Formating Information
         card[2] = htmlConform(card[2]);
         card[2] = mathMode(card[2]);
         card[2] = lists(card[2]);
         card[2] = highlight(card[2]);
         card[2] = code(card[2]);
+        
+
+        // Formating Information
+        card[3] = htmlConform(card[3]);
+        card[3] = mathMode(card[3]);
+        card[3] = lists(card[3]);
+        card[3] = highlight(card[3]);
+        card[3] = code(card[3]);
 
         // Formating Tags
-        card[4] = card[4].replaceFirst("Tags", " ");
-        card[4] = card[4].replaceAll("\\W", " ");
+        card[5] = card[5].replaceFirst("Tags", " ");
+        card[5] = card[5].replaceAll("\\W", " ");
         
         return card;
     }
@@ -43,8 +43,9 @@ public abstract class FormatCard{
         card[2] = card[2].replaceAll("\"", "\"\"");
         card[3] = card[3].replaceAll("\"", "\"\"");
         card[4] = card[4].replaceAll("\"", "\"\"");
+        card[5] = card[5].replaceAll("\"", "\"\"");
 
-        note = "\"" + card[0] + "\"" + separator + "\"" + card[1] + "\"" + separator + "\"" + card[2] + "\"" + separator +"\"" + card[3] + "\"" + separator +"\"" + card[4] + "\"";
+        note = "\"" + card[0] + "\"" + separator + "\"" + card[1] + "\""  + separator+ "\"" + card[2] + "\""  + separator +"\"" + card[3] + "\"" + separator +"\"" + card[4] + "\"" + separator +"\"" + card[5] + "\"";
         return note;
     }
 
