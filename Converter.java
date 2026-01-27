@@ -129,7 +129,7 @@ public class Converter{
             }
 
             
-            while(line <= endingCard && !currentLine.startsWith("Tags:")){
+            while(line < endingCard && !currentLine.startsWith("Tags:")){
                 source = source + currentLine;
                 currentLine = br.readLine();
                 line++;

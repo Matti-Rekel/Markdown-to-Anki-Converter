@@ -55,8 +55,8 @@ public abstract class FormatCard{
     }
 
     private static String mathMode(String field){
-        field = field.replaceAll("\\$\\$(.+?)\\$\\$","<div class =\"math\"><anki-mathjax block=\"true\">$1</anki-mathjax></div>");
-        return field = field.replaceAll("\\$(.+?)\\$","<span class =\"math\"><anki-mathjax>$1</anki-mathjax></span>");
+        field = field.replaceAll("\\$\\$(.+?)\\$\\$", "\\\\[$1\\\\]");
+        return field = field.replaceAll("\\$(.+?)\\$","\\\\($1\\\\)");
     }
 
     private static String highlight(String field){
