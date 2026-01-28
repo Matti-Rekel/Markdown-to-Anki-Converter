@@ -1,22 +1,11 @@
-# Folgen
 
 ### Was ist eine Folge?
 
 Hinweis: bla
 
-Unter einer **Folge** (mit *Werten* in K) versteht man eine Abbildung von \(\mathbb{N}\) nach K. Jedem $n \in \mathbb{N}$ ist aber ein $a_n \in K$ zugeordnet. Man schreibt: $(a_n)_{n \in \mathbb{N}}$ oder $(a_0, a_1, a_2, ...)$, kurz $(a_n)$
-- a
-- b
-- c
-$$ a = 5$$
+test
 
-<!--cloze:1-->
-
-text
-1. d
-2. h
-
-Informationen: 
+Informationen:
 
 Quelle: 2025.11.07_Vorlesung_Folgen
 
@@ -42,23 +31,3 @@ blablabla
 
 
 Quelle: 2025.11.07_Vorlesung_Folgen
-
-# Klassen und Objekte
-
-### Was sind Objekte?
-
-Objekte sind eine Repräsentation eines realen Gegenstands, eines Sachverhaltes, oder eines rein gedanklichen Konzepts.
-
-### Durch was sind Objekte gekenzeichnet?
-
-Hinweis: Frag nicht.
-
-Identität und Eigenschaften.
-
-### Was zählt zu den Eigenschaften eines Objektes?
-
-Ihr Zustand in Form von Attributen und ihr Verhlaten in Form von Methoden.
-
-### Wie werden Objekte graphisch dargestellt?
-
-gar nicht

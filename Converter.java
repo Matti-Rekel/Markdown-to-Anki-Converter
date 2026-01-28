@@ -14,7 +14,7 @@ public class Converter{
 
     static File createFile (File inputFile){
         try {
-            File outputFile = new File("Anki_Files\\"+ inputFile.getName()+ ".txt"); // Create File object
+            File outputFile = new File("Anki_Files\\"+ inputFile.getName().replaceAll(".md", "") + ".txt"); // Create File object
             if (outputFile.createNewFile()) { // Try to create the file
                   System.out.println("File created: " + outputFile.getName());
             } else {
