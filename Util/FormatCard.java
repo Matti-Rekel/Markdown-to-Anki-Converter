@@ -74,8 +74,8 @@ public abstract class FormatCard{
 
 
     //Lists
-    private static final Pattern Orderd_List_Item = Pattern.compile("^(\\s*)([1-9]\\d*)\\.\\s+(.*)$");
-    private static final Pattern Unorderd_List_Item = Pattern.compile("^(\\s*)-\\s+(.*)$");
+    private static final Pattern Orderd_List_Item = Pattern.compile("^(\\s*)([1-9]\\d*)\\.\\s+(.*)$");  // Regex Pattern for orderd Lists
+    private static final Pattern Unorderd_List_Item = Pattern.compile("^(\\s*)-\\s+(.*)$");             // Regex Pattern for unorderd Lists
     private static String lists(String field){// orderd and unorderd lists in HTML
         if (field.isEmpty()){
             return "";
@@ -137,13 +137,6 @@ public abstract class FormatCard{
                 html.append(line).append("<br>");
             }
         }
-        
-        
-
-        
-
-
-
         
         return html.toString();
     }
