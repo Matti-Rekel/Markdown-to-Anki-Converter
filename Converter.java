@@ -47,13 +47,13 @@ public class Converter{
         try (BufferedReader br = new BufferedReader(new FileReader(inputFile.getAbsolutePath()))) {
             String currentLine = br.readLine();
 
-            while(currentLine != null){ // File is not completly read
+            while(currentLine != null){ // While File is not completly read
                 ArrayList<String> cardList = new ArrayList<String>();
                 boolean nextCard = false;
                 if(currentLine != null && currentLine.startsWith("###")){
                     nextCard = true;
                 }
-                while ((currentLine != null && !currentLine.startsWith("###")) || nextCard) { // Fehler Weil ### Line nie gelesen wird
+                while ((currentLine != null && !currentLine.startsWith("###")) || nextCard) {
                     nextCard = false;
                     cardList.add(currentLine);
                     currentLine = br.readLine();

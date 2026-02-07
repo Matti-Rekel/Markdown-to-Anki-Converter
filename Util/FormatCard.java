@@ -1,5 +1,8 @@
 package Util;
 
+import java.util.*;
+import java.util.regex.*;
+
 public abstract class FormatCard{
 
     public static String[] formatCard(String[] card){
@@ -69,77 +72,80 @@ public abstract class FormatCard{
         return field;
     }
 
-    private static String lists(String field){
-        // orderd and unorderd lists in HTML
+
+    //Lists
+    private static final Pattern Orderd_List_Item = Pattern.compile("^(\\s*)([1-9]\\d*)\\.\\s+(.*)$");
+    private static final Pattern Unorderd_List_Item = Pattern.compile("^(\\s*)-\\s+(.*)$");
+    private static String lists(String field){// orderd and unorderd lists in HTML
         if (field.isEmpty()){
             return "";
         }
 
         String[] splitField = field.split("<br>");
+        StringBuilder html = new StringBuilder();
+        int currentIndent_unorderd = 0;
+        int currentIndent_orderd = 0;
 
-        for(int i = 0; i < splitField.length; i++){
-            int lineListStart = 0;
-            int lineListEnd = 0;
+        for (String line : splitField){
+            Matcher matcher_unorderd = Unorderd_List_Item.matcher(line);
+            Matcher matcher_orderd = Orderd_List_Item.matcher(line);
+            if (matcher_unorderd.find()){
+                String leadingSpaces = matcher_unorderd.group(1);
+                String content = matcher_unorderd.group(2);
 
-            // remove # Lines
-            if(!splitField[i].isEmpty() && splitField[i].charAt(0) == '#'){
-                splitField[i] = "";
-            }
+                int indentLevel = (leadingSpaces.length() / 4)+1;
 
-
-            // Unorderd List
-            if(!splitField[i].isEmpty() && splitField[i].charAt(0) == '-'){
-                lineListStart = i;
-                lineListEnd = i -1;
-                while(i < splitField.length && !splitField[i].isEmpty() && splitField[i].charAt(0) == '-'){
-                    i++;
-                    lineListEnd++;
+                if (indentLevel > currentIndent_unorderd) {
+                    for (int i = currentIndent_unorderd; i < indentLevel; i++){
+                        html.append("<ul>");
+                    }
                 }
-
-
-
-                splitField[lineListStart] = splitField[lineListStart].replaceFirst("-", "<ul>  <li>");
-                while(lineListStart <= lineListEnd){
-                    splitField[lineListStart] = splitField[lineListStart].replaceFirst("-", "<li>");
-                    lineListStart++;
+                else if (indentLevel < currentIndent_unorderd){
+                    for (int i = currentIndent_unorderd; i > indentLevel; i--){
+                        html.append("</ul>");
+                    }
                 }
-                splitField[lineListEnd] = splitField[lineListEnd] + "</ul>";
+                currentIndent_unorderd = indentLevel;
+                html.append("<li>").append(content).append("</li>");
+            }else if(matcher_orderd.find()){
+                String leadingSpaces = matcher_orderd.group(1);
+                String content = matcher_orderd.group(3);
 
+                int indentLevel = (leadingSpaces.length() / 4) +1;
 
-            }
-
-            
-            // Orderd List
-            if(i < splitField.length &&!splitField[i].isEmpty() && splitField[i].startsWith("1.")){
-                lineListStart = i;
-                lineListEnd = i -1;
-                while(i < splitField.length && !splitField[i].isEmpty() && splitField[i].charAt(1) == '.'){
-                    i++;
-                    lineListEnd++;
+                if (indentLevel > currentIndent_orderd) {
+                    for (int i = currentIndent_orderd; i < indentLevel; i++){
+                        html.append("<ol>");
+                    }
                 }
-
-                
-
-
-                splitField[lineListStart] = splitField[lineListStart].replaceFirst("1.", "<ol>  <li>");
-                lineListStart++;
-                while(lineListStart <= lineListEnd){
-                    splitField[lineListStart] = splitField[lineListStart].replaceFirst(splitField[lineListStart].charAt(0) + ".", "<li>");
-                    splitField[lineListStart] = splitField[lineListStart] + "</li>";
-                    lineListStart++;
+                else if (indentLevel < currentIndent_orderd){
+                    for (int i = currentIndent_orderd; i > indentLevel; i--){
+                        html.append("</ol>");
+                    }
                 }
-                splitField[lineListEnd] = splitField[lineListEnd] + "</ol>";
+                currentIndent_orderd = indentLevel;
+                html.append("<li>").append(content).append("</li>");
 
-
+            }else{
+                for (int i = currentIndent_orderd; i > 0; i--){
+                    html.append("</ol>");
+                }
+                for (int i = currentIndent_unorderd; i > 0; i--){
+                    html.append("</ul>");
+                }
+        
+                html.append(line).append("<br>");
             }
         }
+        
+        
 
-        // making the Array a String again
-        field = "";
-        for(int i = 0; i < splitField.length; i++){
-            field = field + splitField[i] + "<br>";
-        }
-        return field;
+        
+
+
+
+        
+        return html.toString();
     }
 
     private static String code(String field){
