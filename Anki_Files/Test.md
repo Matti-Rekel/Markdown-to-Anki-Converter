@@ -1,6 +1,10 @@
 ### Was macht Folgender Code? 
 ````java
-System.out.println("HS");
+public class Main{
+    public static void main (String[] args){
+        System.out.println("HS");
+    }
+}
 ````
 
 Hinweis: bla
@@ -11,13 +15,13 @@ Hinweis: bla
 - oder?
 
 ````
-***assert*** 8==D : "LOL";
+assert 8==D : "LOL";
 ````
 
 *test*
 
 **test**
 
-Definition: ***test***
+***assert***: Prüft ob etwas der Fall ist. bricht Sonst das Programm ab und gibt fehler aus.
 
 Beweis: Nein Pascal, ich glaube nicht
