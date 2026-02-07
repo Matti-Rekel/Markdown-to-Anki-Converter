@@ -3,55 +3,61 @@ package Util;
 import java.util.*;
 import java.util.regex.*;
 
-public abstract class FormatCard{
+public class Card{
+    public String question = "";
+    public String hint = "";
+    public String answer = "";
+    public String info = "";
+    public String source = "";
+    public String tags = "";
 
-    public static String[] formatCard(String[] card){
-        if (card[0].isEmpty()){
+    public static Card formatCard(Card card){
+        if (card.question.isEmpty()){
             return card;
         }     
 
         // Formating the Question correctly
-        card[0] = card[0].substring(3);
-        card[0] = card[0].trim();
-        card[0] = mathMode(card[0]);
+        card.question = card.question.substring(3);
+        card.question = card.question.trim();
+        card.question = mathMode(card.question);
         
 
         // Formating the answer
-        card[2] = htmlConform(card[2]);
-        card[2] = mathMode(card[2]);
-        card[2] = lists(card[2]);
-        card[2] = highlight(card[2]);
-        card[2] = code(card[2]);
+        card.answer = htmlConform(card.answer);
+        card.answer = mathMode(card.answer);
+        card.answer = lists(card.answer);
+        card.answer = highlight(card.answer);
+        card.answer = code(card.answer);
         
 
         // Formating Information
-        if (!card[3].isEmpty())
-        card[3] = card[3].substring(14);
-        card[3] = card[3].trim();
-        card[3] = htmlConform(card[3]);
-        card[3] = mathMode(card[3]);
-        card[3] = lists(card[3]);
-        card[3] = highlight(card[3]);
-        card[3] = code(card[3]);
+        if (!card.info.isEmpty())
+        card.info = card.info.substring(14);
+        card.info = card.info.trim();
+        card.info = htmlConform(card.info);
+        card.info = mathMode(card.info);
+        card.info = lists(card.info);
+        card.info = highlight(card.info);
+        card.info = code(card.info);
 
         // Formating Tags
-        card[5] = card[5].replaceFirst("Tags", " ");
-        card[5] = card[5].replaceAll("\\W", " ");
+        card.tags = card.tags.replaceFirst("Tags", " ");
+        card.tags = card.tags.replaceAll("\\W", " ");
         
         return card;
     }
 
-    public static String formatNote(String[] card, char separator){
+    public static String formatNote(Card card, char separator){
         String note = "";
 
-        card[0] = card[0].replaceAll("\"", "\"\"");
-        card[1] = card[1].replaceAll("\"", "\"\"");
-        card[2] = card[2].replaceAll("\"", "\"\"");
-        card[3] = card[3].replaceAll("\"", "\"\"");
-        card[4] = card[4].replaceAll("\"", "\"\"");
-        card[5] = card[5].replaceAll("\"", "\"\"");
+        card.question = card.question.replaceAll("\"", "\"\"");
+        card.hint  = card.hint.replaceAll("\"", "\"\"");
+        card.answer = card.answer.replaceAll("\"", "\"\"");
+        card.info = card.info.replaceAll("\"", "\"\"");
+        card.source = card.source.replaceAll("\"", "\"\"");
+        card.tags = card.tags.replaceAll("\"", "\"\"");
 
-        note = "\"" + card[0] + "\"" + separator + "\"" + card[1] + "\""  + separator+ "\"" + card[2] + "\""  + separator +"\"" + card[3] + "\"" + separator +"\"" + card[4] + "\"" + separator +"\"" + card[5] + "\"";
+        note = "\"" + card.question + "\"" + separator + "\"" + card.hint + "\""  + separator+ "\"" + card.answer + "\""  + separator +"\"" + card.info + "\"" + separator +"\"" + card.source + "\"" + separator +"\"" + card.tags + "\"";
         return note;
     }
 

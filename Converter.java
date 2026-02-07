@@ -6,16 +6,18 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.util.ArrayList;
+import java.util.regex.*;
 
-import Util.FormatCard;
+import Util.Card;
 
 public class Converter{
+
 
     static int cardCounter = 0;
 
     static File createFile (File inputFile){
         try {
-            File outputFile = new File("Anki_Files\\"+ inputFile.getName().replaceAll(".md", "") + ".txt"); // Create File object
+            File outputFile = new File("Anki_Files"+ File.separator + inputFile.getName().replaceAll("\\.md", "") + ".txt"); // Create File object
             if (outputFile.createNewFile()) { // Try to create the file
                   System.out.println("File created: " + outputFile.getName());
             } else {
@@ -53,13 +55,13 @@ public class Converter{
                 if(currentLine != null && currentLine.startsWith("###")){
                     nextCard = true;
                 }
-                while ((currentLine != null && !currentLine.startsWith("###")) || nextCard) {
+                while (currentLine != null && (!currentLine.startsWith("###") || nextCard)) {
                     nextCard = false;
                     cardList.add(currentLine);
                     currentLine = br.readLine();
                 }
-                String[] card = extractCard(cardList, inputFile);
-                String note = FormatCard.formatNote(card,separator);
+                Card card = extractCard(cardList, inputFile);
+                String note = Card.formatNote(card,separator);
                 writeCard(note, outputFile);
             }
 
@@ -70,22 +72,22 @@ public class Converter{
         }
     }
 
-    static String[] extractCard(ArrayList<String> cardList, File inputFile){
-        String[] card = new String[6];
+    static Card extractCard(ArrayList<String> cardList, File inputFile){
+        Card card = new Card();
         String question = "";
         String hint = "";
-        String anwser = "";
-        String info = "";
+        StringBuilder answer = new StringBuilder();
+        StringBuilder info = new StringBuilder();
         String source ="";
         String tags = "";
 
         if(cardList.isEmpty() || !cardList.get(0).startsWith("###")){
-            card[0] = question;
-            card[1] = hint;
-            card[2] = anwser;
-            card[3] = info;
-            card[4] = source;
-            card[5] = tags;
+            card.question = "";
+            card.hint = "";
+            card.answer = "";
+            card.info = "";
+            card.source = "";
+            card.tags = "";
 
             return card;
         }
@@ -113,9 +115,9 @@ public class Converter{
                     continue;
                 }else if ((!currentLine.isEmpty() && currentLine.startsWith("Informationen:")) || infostart){
                     infostart = true;
-                    info = info + currentLine + "\n";
+                    info = info.append(currentLine + "\n");
                 }else{
-                    anwser = anwser + currentLine + "\n";
+                    answer = answer.append(currentLine + "\n");
                 }
 
             }
@@ -125,14 +127,14 @@ public class Converter{
             System.out.println("Error reading file.");
         }
 
-        card[0] = question;
-        card[1] = hint;
-        card[2] = anwser;
-        card[3] = info;
-        card[4] = source;
-        card[5] = tags;
+        card.question = question;
+        card.hint = hint;
+        card.answer = answer.toString();
+        card.info = info.toString();
+        card.source = source;
+        card.tags = tags;
 
-        card = FormatCard.formatCard(card);
+        card = Card.formatCard(card);
 
         return card;
     }
@@ -148,10 +150,15 @@ public class Converter{
 
     public static void main(String[] args){
         char separator = ';'; 
-        File inputFile = new File(args[0]); // Takes the first Argument and takes it as the input File
-        File outputFile = createFile(inputFile); // generating an output File
-        setUpFile(outputFile, separator); // adds basic syntax at begining of .txt file
-        convertFile(inputFile, outputFile, separator);
-        System.out.println("Es wurden " + cardCounter + " Karten gefunden");
+        File inputFile = new File(args[0].replaceAll("\\\\", "\\\\\\\\")); // Takes the first Argument and takes it as the input File
+        if (inputFile.exists()){
+            File outputFile = createFile(inputFile); // generating an output File
+            setUpFile(outputFile, separator); // adds basic syntax at begining of .txt file
+            convertFile(inputFile, outputFile, separator);
+            System.out.println("Es wurden " + cardCounter + " Karten gefunden");
+        }else{
+            System.out.println("Die angegebene Datei konnte nicht gefunden werden / existiert nicht. Bitte überprüfe deine Eingabe: " + args[0]);
+        }
+        
     }
 }

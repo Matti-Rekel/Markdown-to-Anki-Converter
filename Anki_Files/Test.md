@@ -1,5 +1,3 @@
-# Test
-
 ### Was ist eine Folge?
 
 Hinweis: bla
@@ -10,4 +8,4 @@ Hinweis: bla
 - oder?
 
 
-Informationen: Nein Pascal, ich glaube nicht
+Beweis: Nein Pascal, ich glaube nicht
