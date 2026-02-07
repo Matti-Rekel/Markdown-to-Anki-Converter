@@ -102,11 +102,14 @@ public class Card{
     }
 
     private static String highlight(String field){
+        //bold and italic
+        field = field.replaceAll("\\*\\*\\*(.+?)\\*\\*\\*","<span class=\"definition\">$1</span>");
+        
         //bold
-        field = field.replaceAll("\\*\\*(.+?)\\*\\*","<span class=\"highlight1\">$1</span>");
+        field = field.replaceAll("\\*\\*(.+?)\\*\\*","<span class=\"highlight2\">$1</span>");
 
         //italics
-        field = field.replaceAll("\\*(.+?)\\*","<span class=\"highlight2\">$1</span>");
+        field = field.replaceAll("\\*(.+?)\\*","<span class=\"highlight1\">$1</span>");
 
         return field;
     }
@@ -182,6 +185,7 @@ public class Card{
 
     private static String code(String field){
         field = field.replaceAll("````java\\s*<br>(.*)````", "<pre class=\"code\">$1</pre>");
+        field = field.replaceAll("````\\s*<br>(.*)````", "<pre class=\"code\">$1</pre>");
 
         return field;
     }
