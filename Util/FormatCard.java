@@ -25,6 +25,9 @@ public abstract class FormatCard{
         
 
         // Formating Information
+        if (!card[3].isEmpty())
+        card[3] = card[3].substring(14);
+        card[3] = card[3].trim();
         card[3] = htmlConform(card[3]);
         card[3] = mathMode(card[3]);
         card[3] = lists(card[3]);
