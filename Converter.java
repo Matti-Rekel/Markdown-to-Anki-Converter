@@ -5,12 +5,13 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
+import java.util.ArrayList;
 
 import Util.FormatCard;
 
 public class Converter{
 
-    static int cardCounter = -1;
+    static int cardCounter = 0;
 
     static File createFile (File inputFile){
         try {
@@ -44,35 +45,32 @@ public class Converter{
 
     static void convertFile (File inputFile, File outputFile, char separator){
         try (BufferedReader br = new BufferedReader(new FileReader(inputFile.getAbsolutePath()))) {
-            String currentLine;
-            int line = 0;
-            int beginingCard = 1;
-            int endingCard =0;
+            String currentLine = br.readLine();
 
-            while ((currentLine = br.readLine()) != null) {
-                if(!currentLine.isEmpty() && currentLine.startsWith("###")){
-                    endingCard = line;
-                    String[] card = extractCard(beginingCard, endingCard, inputFile);
-                    String note = FormatCard.formatNote(card, separator);
-                    writeCard(note, outputFile);
-                    beginingCard = endingCard+1;
+            while(currentLine != null){ // File is not completly read
+                ArrayList<String> cardList = new ArrayList<String>();
+                boolean nextCard = false;
+                if(currentLine != null && currentLine.startsWith("###")){
+                    nextCard = true;
                 }
-                line++;
+                while ((currentLine != null && !currentLine.startsWith("###")) || nextCard) { // Fehler Weil ### Line nie gelesen wird
+                    nextCard = false;
+                    cardList.add(currentLine);
+                    currentLine = br.readLine();
+                }
+                String[] card = extractCard(cardList, inputFile);
+                String note = FormatCard.formatNote(card,separator);
+                writeCard(note, outputFile);
             }
-            endingCard = line;
-            String[] card = extractCard(beginingCard, endingCard, inputFile);
-            String note = FormatCard.formatNote(card, separator);
-            writeCard(note, outputFile);
+
+
 
         } catch (IOException e) {
             System.out.println("Error reading file.");
         }
     }
 
-    static String[] extractCard(int beginingCard, int endingCard, File inputFile){
-
-        cardCounter +=1;
-
+    static String[] extractCard(ArrayList<String> cardList, File inputFile){
         String[] card = new String[6];
         String question = "";
         String hint = "";
@@ -81,7 +79,7 @@ public class Converter{
         String source ="";
         String tags = "";
 
-        if(beginingCard == 1){
+        if(cardList.isEmpty() || !cardList.get(0).startsWith("###")){
             card[0] = question;
             card[1] = hint;
             card[2] = anwser;
@@ -92,59 +90,38 @@ public class Converter{
             return card;
         }
 
+        cardCounter +=1;
+
         int line = 1;
-        String currentLine = "";
 
-        try (BufferedReader br = new BufferedReader(new FileReader(inputFile.getAbsolutePath()))) {
-        
-
-            while(line < beginingCard){
-                br.readLine();
-                line++;
-            }
+        try {
             
-            question = br.readLine();
+            question = cardList.get(0);
+            boolean infostart = false;
             
-            while(line < endingCard && currentLine.isEmpty()){
-                currentLine = br.readLine();
-                line++;
-            }
+            for (int i = 1; i < cardList.size(); i++){
+                String currentLine = cardList.get(i);
 
-        
-            if(!currentLine.isEmpty() && currentLine.startsWith("Hinweis:")){
-                hint = currentLine;
-                currentLine = br.readLine();
-            }
+                if (!currentLine.isEmpty() && currentLine.startsWith("Hinweis:")){
+                    hint = currentLine;
+                    continue;
+                }else if (!currentLine.isEmpty() && currentLine.startsWith("Quelle:")){
+                    source = currentLine;
+                    continue;
+                }else if (!currentLine.isEmpty() && currentLine.startsWith("Tags:")){
+                    tags = currentLine;
+                    continue;
+                }else if ((!currentLine.isEmpty() && currentLine.startsWith("Informationen:")) || infostart){
+                    infostart = true;
+                    info = info + currentLine + "\n";
+                }else{
+                    anwser = anwser + currentLine + "\n";
+                }
 
-            while(line <= endingCard && (!currentLine.startsWith("Informationen:") && !currentLine.startsWith("Quelle:") && !currentLine.startsWith("Tags:"))){
-                anwser = anwser + currentLine + "\n";
-                currentLine = br.readLine();
-                line++;
-            }
-
-            while(line <= endingCard && (!currentLine.startsWith("Quelle:") && !currentLine.startsWith("Tags:"))){
-                info = info + currentLine;
-                currentLine = br.readLine();
-                line++;
-            }
-
-            
-            while(line < endingCard && !currentLine.startsWith("Tags:")){
-                source = source + currentLine;
-                currentLine = br.readLine();
-                line++;
-            }
-
-            while(line <= endingCard){
-                tags = tags + currentLine;
-                currentLine = br.readLine();
-                line++;
             }
 
 
-
-        
-        } catch (IOException e) {
+        } catch (Exception e){
             System.out.println("Error reading file.");
         }
 
