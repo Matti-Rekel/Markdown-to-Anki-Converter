@@ -1,4 +1,7 @@
-### Was ist eine Folge?
+### Was macht Folgender Code? 
+````java
+System.out.println("HS");
+````
 
 Hinweis: bla
 
@@ -7,5 +10,8 @@ Hinweis: bla
     - bestimmt
 - oder?
 
+````java
+***assert*** 8==D : "LOL";
+````
 
 Beweis: Nein Pascal, ich glaube nicht

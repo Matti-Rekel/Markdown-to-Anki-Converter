@@ -1,84 +1,49 @@
-# Integration und Differentiation
+### Was sind die zwei Schritte der vollständigen Induktion für eine Aussage $A(n)$ ab $n_0 \in \mathbb{Z}$?
 
-### Wie lautet der Hauptsatz (Fundermentalsatz) der Differential und Integralrechnung (HDI)?
+1. **Induktionsanfang:** $A(n_0)$ ist wahr ✅  
+2. **Induktionsschritt:** Für beliebiges $n \ge n_0$ gilt: Wenn $A(n)$ wahr ist, dann ist auch $A(n+1)$ wahr ✅
 
-$f:[a,b] \rightarrow \mathbb{R}$ stetig, $F: [a,b] \rightarrow \mathbb{R}$ eine Stammfunktion von $f$, dann $$\int_a^b f(x) dx = [F(x)]_a^b = F(b) - F(a)$$
+Informationen: Beim Induktionsschritt wird oft die **Induktionsvoraussetzung** verwendet, um von $n$ auf $n+1$ zu schließen.
 
-Quelle: 2026.01.27_Übung, 2026.01.28_Vorlesung
+### Gib ein einfaches Beispiel, wie die Induktion von $n$ auf $n+1$ funktioniert.
 
-### Was ist die Bedingung für den HDI?
+Summe der ersten $n$ natürlichen Zahlen:  
+$$
+1 + 2 + \dots + n = \frac{n(n+1)}{2}
+$$
 
-$f$ muss stetig sein.
+Informationen:  
+- Induktionsanfang: $n=1 \Rightarrow 1 = \frac{1\cdot2}{2}$ ✅  
+- Induktionsschritt: Angenommen, Formel gilt für $n$. Dann für $n+1$:  
+$$
+1 + 2 + \dots + n + (n+1) = \frac{n(n+1)}{2} + (n+1) = \frac{(n+1)(n+2)}{2} ✅
+$$
 
-Quelle: 2026.01.28_Vorlesung
+### Was bedeutet $X := A$?
 
-### Wie lautet die Formel für partielle Integration?
+$X$ ist nach Definition gleich $A$.
 
-$$\int_a^b f'(x)g(x) dx = [fg]_a^b - \int_a^b f(x)g'(x) dx$$
+Informationen: Das Symbol $:=$ wird oft für **Definitionen oder Zuweisungen** in Mathematik und Informatik verwendet.
 
-Informationen: Bedingung: Seien $f,g: [a,b] \rightarrow \mathbb{R}$ stetig differenzierbar.
+### Wann ist eine natürliche Zahl $n > 1$ eine Primzahl?
 
-Quelle: 2026.01.27_Übung
+$n$ ist eine Primzahl, wenn für jede Zerlegung $n = k \cdot l$ gilt:  
+$k = 1$ oder $l = 1$
 
-### Wie lauteten die Bedingungen für partielle Integration?
+Informationen: Beispiele: $2, 3, 5, 7, 11, \dots$
 
-- Seien $f,g: [a,b] \rightarrow \mathbb{R}$ stetig differenzierbar. 
-- Lol
-    - Hurensohn
-- Pimmel
+### Wie ist $n!$ definiert?
 
-usw.
+$$
+n! := \prod_{k=1}^{n} k = 1 \cdot 2 \cdot \dots \cdot n
+$$
 
-Informationen: Formel: $$\int_a^b f'(x)g(x) dx = [fg]_a^b - \int_a^b f(x)g'(x) dx$$
+Informationen: Beispiel: $4! = 1 \cdot 2 \cdot 3 \cdot 4 = 24$
 
-Quelle: 2026.01.27_Übung
+### Wie lautet die geometrische Summenformel für $\sum_{k=0}^n x^k$?
 
-### Seien $F,G$ Stammfunktionen von $f$ was gilt für $F-G$?
+$$
+\sum_{k=0}^{n} x^k = \frac{1 - x^{n+1}}{1 - x}, \quad x \neq 1
+$$
 
-$F-G$ ist konstant.
-
-Quelle: 2026.01.28_Vorlesung
-
-### Was sind die Bedingungen für die Substitutionsregel?
-
-Sei $f: I \rightarrow \mathbb{R}$ stetig, $\varphi: [a,b] \rightarrow \mathbb{R}$ stetig differenzierbar mit $\varphi([a,b]) \subset I$.
-
-Informationen: $$\int_a^b f(\varphi(t)) \varphi'(t) dt = \int_{\varphi(a)}^{\varphi(b)} f(x) dx$$
-
-Quelle: 2026.01.28_Vorlesung
-
-### Wie lautet die Formel für die Substitutionsregel?
-
-$$\int_a^b f(\varphi(t)) \varphi'(t) dt = \int_{\varphi(a)}^{\varphi(b)} f(x) dx$$
-
-Informationen: Sei $f: I \rightarrow \mathbb{R}$ stetig, $\varphi: [a,b] \rightarrow \mathbb{R}$ stetig differenzierbar mit $\varphi([a,b]) \subset I$.
-
-Quelle: 2026.01.28_Vorlesung
-
-### Wende die Substitutions Regel an: $\int_a^b f(t+c) dt$.
-
-$$\int_{a+c}^{b+c}f(x) dx$$
-
-Informationen: $$\int_a^b f(\varphi(t)) \varphi'(t) dt = \int_{\varphi(a)}^{\varphi(b)} f(x) dx$$
-
-Quelle: 2026.01.28_Vorlesung
-
-### Wende die partielle Integrationsregel an: $\int_a^b \log(x) dx$
-
-$$= [x\log(x)]_a^b - \int_a^b x \frac{1}{x} dx$$
-
-Informationen: Formel: $$\int_a^b f'(x)g(x) dx = [fg]_a^b - \int_a^b f(x)g'(x) dx$$
-
-Quelle: 2026.01.28_Vorlesung
-
-### Wie lautet das Wallische Produkt?
-
-$$\frac{\pi}{2} = \prod_{k=1}^\infty \frac{4k^2}{4k^2-1}$$
-
-Quelle: 2026.01.30_Vorlesung
-
-### Wie lautet die Trapez-Regel?
-
-Sei $f:[0,1] \rightarrow \mathbb{R}$ zweimal stetig differenzierbar. Dann ist $$\int_0^1 f(x) dx = \frac{1}{2} (f(0)+f(1)) -R$$, wobei für das Restglied gilt: $$R = \frac{1}{2} \int_0^1 x (1-x) f''(x) dx = \frac{1}{12} f''(\xi )$$ für ein $\xi  \in [0,1]$
-
-Quelle: 2026.01.30_Vorlesung
+Informationen: Funktioniert nur für $x \neq 1$

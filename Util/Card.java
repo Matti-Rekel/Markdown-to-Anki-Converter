@@ -19,7 +19,21 @@ public class Card{
         // Formating the Question correctly
         card.question = card.question.substring(3);
         card.question = card.question.trim();
+        card.question = htmlConform(card.question);
         card.question = mathMode(card.question);
+        card.question = lists(card.question);
+        card.question = highlight(card.question);
+        card.question = code(card.question);
+        card.question = card.question.replaceAll("^(?:\\s*<br\\s*/?>\\s*)+|(?:\\s*<br\\s*/?>\\s*)+$", "");
+
+
+        // Formating Hints
+        card.hint = htmlConform(card.hint);
+        card.hint = mathMode(card.hint);
+        card.hint = lists(card.hint);
+        card.hint = highlight(card.hint);
+        card.hint = code(card.hint);
+        card.hint = card.hint.replaceAll("^(?:\\s*<br\\s*/?>\\s*)+|(?:\\s*<br\\s*/?>\\s*)+$", "");
         
 
         // Formating the answer
@@ -28,21 +42,37 @@ public class Card{
         card.answer = lists(card.answer);
         card.answer = highlight(card.answer);
         card.answer = code(card.answer);
-        
+        card.answer = card.answer.replaceAll("^(?:\\s*<br\\s*/?>\\s*)+|(?:\\s*<br\\s*/?>\\s*)+$", "");
+
 
         // Formating Information
         if (!card.info.isEmpty())
-        card.info = card.info.substring(14);
+        card.info = card.info.replaceFirst("^\\w+:", "");
         card.info = card.info.trim();
         card.info = htmlConform(card.info);
         card.info = mathMode(card.info);
         card.info = lists(card.info);
         card.info = highlight(card.info);
         card.info = code(card.info);
+        card.info = card.info.replaceAll("^(?:\\s*<br\\s*/?>\\s*)+|(?:\\s*<br\\s*/?>\\s*)+$", "");
+
+        //Formating Source
+        card.source = htmlConform(card.source);
+        card.source = mathMode(card.source);
+        card.source = lists(card.source);
+        card.source = highlight(card.source);
+        card.source = code(card.source);
+        card.source = card.source.replaceAll("^(?:\\s*<br\\s*/?>\\s*)+|(?:\\s*<br\\s*/?>\\s*)+$", "");
 
         // Formating Tags
         card.tags = card.tags.replaceFirst("Tags", " ");
         card.tags = card.tags.replaceAll("\\W", " ");
+        card.tags = htmlConform(card.tags);
+        card.tags = mathMode(card.tags);
+        card.tags = lists(card.tags);
+        card.tags = highlight(card.tags);
+        card.tags = code(card.tags);
+        card.tags = card.tags.replaceAll("^(?:\\s*<br\\s*/?>\\s*)+|(?:\\s*<br\\s*/?>\\s*)+$", "");
         
         return card;
     }
@@ -151,8 +181,7 @@ public class Card{
     }
 
     private static String code(String field){
-        field = field.replace("````java<br>", "<pre class=\"code\">");
-        field = field.replace("````", "</pre>");
+        field = field.replaceAll("````java\\s*<br>(.*)````", "<pre class=\"code\">$1</pre>");
 
         return field;
     }
