@@ -97,8 +97,8 @@ public class Card{
     }
 
     private static String mathMode(String field){
-        field = field.replaceAll("\\$\\$(.+?)\\$\\$", "\\\\[$1\\\\]");
-        return field = field.replaceAll("\\$(.+?)\\$","\\\\($1\\\\)");
+        field = field.replaceAll("\\$\\$(.+?)\\$\\$", "<span class =\"math-big\">\\\\[$1\\\\]</span>");
+        return field = field.replaceAll("\\$(.+?)\\$","<span class =\"math\">\\\\($1\\\\)</span>");
     }
 
     private static String highlight(String field){
