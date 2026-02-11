@@ -60,7 +60,7 @@ public class Converter{
                     cardList.add(currentLine);
                     currentLine = br.readLine();
                 }
-                Card card = extractCard(cardList, inputFile);
+                Card card = extractCard(cardList);
                 String note = Card.formatNote(card,separator);
                 writeCard(note, outputFile);
             }
@@ -72,7 +72,7 @@ public class Converter{
         }
     }
 
-    static Card extractCard(ArrayList<String> cardList, File inputFile){
+    static Card extractCard(ArrayList<String> cardList){
         Card card = new Card();
         StringBuilder question = new StringBuilder();
         StringBuilder hint = new StringBuilder();
@@ -143,7 +143,7 @@ public class Converter{
 
 
         } catch (Exception e){
-            System.out.println("Error reading file.");
+            System.out.println("Fehler bei der Karten extraktion");
             e.printStackTrace();
         }
 
