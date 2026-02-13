@@ -112,6 +112,11 @@ public class Converter{
             for (int i = 0; i < cardList.size(); i++){
                 String currentLine = cardList.get(i);
 
+                // Skiping lines starting with ## May add them later as local tags (TODO)
+                if (!currentLine.isEmpty() && currentLine.startsWith("## ")){
+                  continue;
+                }
+
                 if(!currentLine.isEmpty() && currentLine.startsWith("###")){
                     currentSection = Section.QUESTION;
                 }
