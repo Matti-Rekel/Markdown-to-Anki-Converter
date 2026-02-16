@@ -4,3 +4,4 @@
 - [x] Extract the cards into a database to be more modular
 - [x] Import the Cards directly into Anki with AnkiConnect for example
 - [x] Add support for images
+- [x] look into prism.js
