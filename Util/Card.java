@@ -187,6 +187,11 @@ public class Card{
         field = field.replaceAll("````java\\s*<br>(.*)````", "<pre class=\"code\">$1</pre>");
         field = field.replaceAll("````\\s*<br>(.*)````", "<pre class=\"code\">$1</pre>");
 
+
+        field = field.replaceAll("```java\\s*<br>(.*)```", "<pre class=\"code\">$1</pre>");
+        field = field.replaceAll("```\\s*<br>(.*)```", "<pre class=\"code\">$1</pre>");
+
+
         return field;
     }
 
