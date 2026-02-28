@@ -17,7 +17,7 @@ public class Converter{
 
     static File createFile (File inputFile){
         try {
-            File outputFile = new File("Anki_Files"+ File.separator + inputFile.getName().replaceAll("\\.md", "") + ".txt"); // Create File object
+            File outputFile = new File("Output" +File.separator + inputFile.getName().replaceAll("\\.md", "") + ".txt"); // Create File object
             if (outputFile.createNewFile()) { // Try to create the file
                   System.out.println("File created: " + outputFile.getName());
             } else {
@@ -173,8 +173,22 @@ public class Converter{
         }
     }
 
+    static String checkMediasupport(String arg2){
+      try (BufferedReader configs = new BufferedReader(new FileReader("Util" + File.separator + "config.md"))){
+        String pathMediaFolder = configs.readLine();
+        if (pathMediaFolder.isEmpty()){
+          System.out.println("Pleas run the Program again with Anki's MediaFolder Filepath as the second argument to suport Images");
+        }
+      } catch (Exception e){
+        System.out.println("Pleas run the Program again with Anki's MediaFolder Filepath as the second argument to suport Images");
+      }
+      return "";
+    }
+
     public static void main(String[] args){
         char separator = ';'; 
+        String pathMediaFolder = checkMediasupport(args[1]);
+        System.out.println(pathMediaFolder);
         File inputFile = new File(args[0].replaceAll("\\\\", "\\\\\\\\")); // Takes the first Argument and takes it as the input File
         if (inputFile.exists()){
             File outputFile = createFile(inputFile); // generating an output File

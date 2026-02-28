@@ -1,7 +1,7 @@
 # TODO
 
-- [x] Contents of math- or code-mode be ignored for highlight
-- [x] Extract the cards into a database to be more modular
-- [x] Import the Cards directly into Anki with AnkiConnect for example
-- [x] Add support for images
-- [x] look into prism.js
+- [ ] Contents of math- or code-mode be ignored for highlight
+- [ ] Extract the cards into a database to be more modular
+- [ ] Import the Cards directly into Anki with AnkiConnect for example
+- [ ] Add support for images
+- [ ] look into prism.js
