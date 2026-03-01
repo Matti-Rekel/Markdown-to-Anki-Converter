@@ -25,8 +25,6 @@ $$
 R = \frac{1}{2} \int_0^1 x (1-x) f''(x) dx = \frac{1}{12} f''(\xi )
 $$
 
-<img src="Media/1-sunset-lake.png">
-
 And there is basic support for code:
 currently either with Java or without additional info in Markdown
 

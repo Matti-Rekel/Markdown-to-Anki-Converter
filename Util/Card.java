@@ -1,5 +1,11 @@
 package Util;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.io.IOException;
+
 import java.util.*;
 import java.util.regex.*;
 
@@ -11,7 +17,7 @@ public class Card{
     public String source = "";
     public String tags = "";
 
-    public static Card formatCard(Card card){
+    public static Card formatCard(Card card, Path inputPath){
         if (card.question.isEmpty()){
             return card;
         }     
@@ -38,6 +44,7 @@ public class Card{
 
         // Formating the answer
         card.answer = htmlConform(card.answer);
+        card.answer = imageHandler(card.answer, inputPath);
         card.answer = mathMode(card.answer);
         card.answer = lists(card.answer);
         card.answer = highlight(card.answer);
@@ -95,11 +102,41 @@ public class Card{
 
         return field = (field.isEmpty() ?  "" :  field.replaceAll("\n", "<br>"));
     }
+    
+    //TODO: 
+    // - Image Name
+    private static String imageHandler (String field, Path fileSource){
+      String home = System.getProperty("user.home");
+      Path ankiPath = Paths.get(home, ".local", "share", "Anki2", "User 1", "collection.media"); 
+      Pattern imagePattern = Pattern.compile("(<img.*?>)");
+      Pattern imageSrcPattern = Pattern.compile("src=\\\"(.*?)\\\"");
+      Matcher imageMatcher = imagePattern.matcher(field);
+      while (imageMatcher.find()){
+        Matcher imageSrcMatcher = imageSrcPattern.matcher(imageMatcher.group(1));
+        imageSrcMatcher.find();
+        Path source = Paths.get(imageSrcMatcher.group(1));
+        try {
+          if (source.isAbsolute()){
+            Files.copy(source, Paths.get(ankiPath + "/" + source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+          } else{
+            source = Paths.get(fileSource.getParent() + "/" + source.toString());
+            Files.copy(source, Paths.get(ankiPath + "/" + source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+          }
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+
+      field = field.replaceAll("src=\"[^\"]*?/([^/]+)\"", "src=\"$1\"");
+      return field;
+  
+    }
 
     private static String mathMode(String field){
         field = field.replaceAll("\\$\\$(.+?)\\$\\$", "<span class =\"math-big\">\\\\[$1\\\\]</span>");
         return field = field.replaceAll("\\$(.+?)\\$","<span class =\"math\">\\\\($1\\\\)</span>");
     }
+
 
     private static String highlight(String field){
         //bold and italic

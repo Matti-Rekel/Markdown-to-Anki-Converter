@@ -7,6 +7,11 @@ import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.util.ArrayList;
 import java.util.regex.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.io.IOException;
 
 import Util.Card;
 
@@ -46,6 +51,7 @@ public class Converter{
     }
 
     static void convertFile (File inputFile, File outputFile, char separator){
+      Path inputFilePath = inputFile.toPath();
         try (BufferedReader br = new BufferedReader(new FileReader(inputFile.getAbsolutePath()))) {
             String currentLine = br.readLine();
 
@@ -60,7 +66,7 @@ public class Converter{
                     cardList.add(currentLine);
                     currentLine = br.readLine();
                 }
-                Card card = extractCard(cardList);
+                Card card = Card.formatCard(extractCard(cardList), inputFilePath);
                 String note = Card.formatNote(card,separator);
                 writeCard(note, outputFile);
             }
@@ -159,8 +165,6 @@ public class Converter{
         card.source = source.toString();
         card.tags = tags.toString();
 
-        card = Card.formatCard(card);
-
         return card;
     }
 
@@ -173,22 +177,8 @@ public class Converter{
         }
     }
 
-    static String checkMediasupport(String arg2){
-      try (BufferedReader configs = new BufferedReader(new FileReader("Util" + File.separator + "config.md"))){
-        String pathMediaFolder = configs.readLine();
-        if (pathMediaFolder.isEmpty()){
-          System.out.println("Pleas run the Program again with Anki's MediaFolder Filepath as the second argument to suport Images");
-        }
-      } catch (Exception e){
-        System.out.println("Pleas run the Program again with Anki's MediaFolder Filepath as the second argument to suport Images");
-      }
-      return "";
-    }
-
-    public static void main(String[] args){
+       public static void main(String[] args){
         char separator = ';'; 
-        String pathMediaFolder = checkMediasupport(args[1]);
-        System.out.println(pathMediaFolder);
         File inputFile = new File(args[0].replaceAll("\\\\", "\\\\\\\\")); // Takes the first Argument and takes it as the input File
         if (inputFile.exists()){
             File outputFile = createFile(inputFile); // generating an output File
