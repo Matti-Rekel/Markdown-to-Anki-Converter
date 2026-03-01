@@ -17,10 +17,10 @@ public class Card{
     public String source = "";
     public String tags = "";
 
-    public static Card formatCard(Card card, Path inputPath){
+    public static Card formatCard(Card card, Path inputPath, Path ankiMediaPath){
         if (card.question.isEmpty()){
             return card;
-        }     
+        }
 
         // Formating the Question correctly
         card.question = card.question.substring(3);
@@ -44,7 +44,7 @@ public class Card{
 
         // Formating the answer
         card.answer = htmlConform(card.answer);
-        card.answer = imageHandler(card.answer, inputPath);
+        card.answer = imageHandler(card.answer, inputPath, ankiMediaPath);
         card.answer = mathMode(card.answer);
         card.answer = lists(card.answer);
         card.answer = highlight(card.answer);
@@ -103,11 +103,8 @@ public class Card{
         return field = (field.isEmpty() ?  "" :  field.replaceAll("\n", "<br>"));
     }
     
-    //TODO: 
-    // - Image Name
-    private static String imageHandler (String field, Path fileSource){
+    private static String imageHandler (String field, Path fileSource, Path ankiMediaPath){
       String home = System.getProperty("user.home");
-      Path ankiPath = Paths.get(home, ".local", "share", "Anki2", "User 1", "collection.media"); 
       Pattern imagePattern = Pattern.compile("(<img.*?>)");
       Pattern imageSrcPattern = Pattern.compile("src=\\\"(.*?)\\\"");
       Matcher imageMatcher = imagePattern.matcher(field);
@@ -117,10 +114,10 @@ public class Card{
         Path source = Paths.get(imageSrcMatcher.group(1));
         try {
           if (source.isAbsolute()){
-            Files.copy(source, Paths.get(ankiPath + "/" + source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(source, Paths.get(ankiMediaPath + "/" + source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
           } else{
             source = Paths.get(fileSource.getParent() + "/" + source.toString());
-            Files.copy(source, Paths.get(ankiPath + "/" + source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(source, Paths.get(ankiMediaPath + "/" + source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
           }
         } catch (IOException e) {
           e.printStackTrace();

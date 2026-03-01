@@ -22,6 +22,7 @@ public class Converter{
 
     static File createFile (File inputFile){
         try {
+            new File("Output").mkdirs();
             File outputFile = new File("Output" +File.separator + inputFile.getName().replaceAll("\\.md", "") + ".txt"); // Create File object
             if (outputFile.createNewFile()) { // Try to create the file
                   System.out.println("File created: " + outputFile.getName());
@@ -66,7 +67,7 @@ public class Converter{
                     cardList.add(currentLine);
                     currentLine = br.readLine();
                 }
-                Card card = Card.formatCard(extractCard(cardList), inputFilePath);
+                Card card = Card.formatCard(extractCard(cardList), inputFilePath, ankiMediaPath);
                 String note = Card.formatNote(card,separator);
                 writeCard(note, outputFile);
             }
@@ -100,10 +101,7 @@ public class Converter{
 
         cardCounter +=1;
 
-        int line = 1;
-
         try {
-            
             enum Section {
                 NONE,
                 QUESTION,
@@ -177,9 +175,29 @@ public class Converter{
         }
     }
 
+   static public Path ankiMediaPath;
        public static void main(String[] args){
         char separator = ';'; 
         File inputFile = new File(args[0].replaceAll("\\\\", "\\\\\\\\")); // Takes the first Argument and takes it as the input File
+        try{
+          File config = new File("config.txt");
+          if (!config.exists()){
+            if (args.length >= 2){
+              config.createNewFile();
+              BufferedWriter confWriter = new BufferedWriter(new FileWriter(config.getAbsolutePath(), true));
+              confWriter.write(args[1]);
+              confWriter.close();
+            } else{
+              System.out.println("Please run the Programm again and give Ankis Media Folder as second Argument");
+              return;
+            }
+          }
+          BufferedReader confReader = new BufferedReader(new FileReader(config.getAbsolutePath()));
+          ankiMediaPath = Paths.get(confReader.readLine());
+        } catch (Exception e) {
+          System.out.println("Error reading/writing config File");
+          return;
+        }
         if (inputFile.exists()){
             File outputFile = createFile(inputFile); // generating an output File
             setUpFile(outputFile, separator); // adds basic syntax at begining of .txt file
