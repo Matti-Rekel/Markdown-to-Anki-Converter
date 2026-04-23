@@ -117,7 +117,7 @@ public class Converter{
         String currentLine = cardList.get(i);
 
         // Skiping lines starting with ## or #. May add them later as local tags (TODO)
-        if (!currentLine.isEmpty() && (currentLine.startsWith("## ") || currentLine.startsWith("#"))){
+        if (!currentLine.isEmpty() && (currentLine.startsWith("## ") || currentLine.startsWith("# "))){
           continue;
         }
 
