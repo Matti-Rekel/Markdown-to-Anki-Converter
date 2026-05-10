@@ -17,7 +17,7 @@ Also features are ordered as well as unordered lists
 2. second line
     1. first indented line
 
-also supported are math:
+also supported are <math>:
 for small equations: $ a² + b² = c² $
 
 And big equations which become scrollable in Anki on mobile:
