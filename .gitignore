@@ -1,7 +1,7 @@
-# Projekt spezifisch
+build/
+cmake-build*/
+.idea/
+.vscode/
+.vs/
 
-*.txt
-
-# Java files
-
-*.class
+.DS_Store
