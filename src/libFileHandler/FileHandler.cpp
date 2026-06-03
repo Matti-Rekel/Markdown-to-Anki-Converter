@@ -2,17 +2,30 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
 using namespace std;
 
-void test(){
-    fstream MyFile("/home/Matti/Projekte/Markdown-to-Anki-Converter/Output/file.txt", ios::in | ios::out | ios::trunc);
-    if (!MyFile) {
-        cout << "failed\n";
+bool isValidPath(string Path){
+    fstream MyFile(Path);
+    return !MyFile;
+}
+
+void readFile(string Path){
+    std::ifstream file(Path);
+
+    if (!file.is_open()) {
+        std::cerr << "Error opening file\n";
         return;
     }
-    MyFile << "Files can be tricky, but it is fun enough!";
-    MyFile.seekg(0);
-    string myText;
-    getline(MyFile, myText);
-    cout << myText;
+
+    std::string line;
+    std::vector<std::string> card{};
+
+    while (std::getline(file, line)) {
+        card.push_back(line);
+    }
+    std::cout << card.at(0) << "\n";
+
+    file.close();
 }
+

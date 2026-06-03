@@ -10,5 +10,5 @@ int main(){
     string filePath = "";
     cout << "Please paste file path for a file you want converted to Anki cards: ";
     cin >> filePath;
-    test();
+    readFile(filePath);
 }
