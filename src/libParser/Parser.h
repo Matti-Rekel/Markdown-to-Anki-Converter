@@ -21,7 +21,7 @@
     auto parse_md_to_html(string field) -> string;
 
 
-    split_Text(string text, std::map<string, fields> keywords){
+    auto split_Text(string text, std::map<string, fields> keywords){
         Card res;
 
         /* Der Plan:
