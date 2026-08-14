@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include "FileHandler.h"
+#include "Formatter.h"
 #include "Parser.h"
 
 using std::cout;

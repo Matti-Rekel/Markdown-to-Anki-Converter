@@ -47,3 +47,7 @@ string read_Card(std::ios::pos_type begining, std::ios::pos_type end, string fil
     }
     return res;
 }
+
+auto write_preamble(std::string path) -> void {
+    std::ofstream out_put
+}

@@ -1,3 +1,3 @@
 add_executable(Converter main.cpp)
 
-target_link_libraries(Converter FileHandler Parser)
+target_link_libraries(Converter FileHandler Formatter Parser)
