@@ -1,7 +1,11 @@
 #ifndef PARSER_H
 #define PARSER_H
-{
-    using std::String;
+
+#include <map>
+#include <string>
+#include <vector>
+#include <utility>
+    using std::string;
 
     struct Card {
         string Question         = "";
@@ -12,27 +16,20 @@
         string Source           = "";
     };
     enum class fields{
-        Question, Prerequisites, Hint, Answer, Add_Information, Source;
-    }
+        Question, Prerequisites, Hint, Answer, Add_Information, Source
+    };
 
 
-    auto process_file(string file_text) -> void;
-    auto split_Text(String text, std::map<string, fields> keywords) -> Card;
+    auto split_text(std::string text, std::map<string, fields> keywords) -> Card;
+    auto find_question(std::string text, size_t & index) -> std::string;
+    auto find_answer(std::string text, size_t & index) -> std::string;
+    auto find_extra_fields(string text, size_t & index, std::map<string, fields>) -> std::map<fields, string>;
+    auto split_into_extra(string text, size_t index) -> std::vector<string>;
+    auto get_extra(string & text, std::vector<size_t> i) -> std::vector<string>;
+    auto find_keyword(string text, std::map<string, fields> keywords) -> std::pair<fields, string>;
+
+
     auto parse_md_to_html(string field) -> string;
 
 
-    auto split_Text(string text, std::map<string, fields> keywords){
-        Card res;
-
-        /* Der Plan:
-         * Die Überschrift mit ## ist die Frage. Direkt gefolgt von der Antwort.
-         * Die Zusatzfelder werden danach mit ### Makiert.
-         * In keywords ist Gespeichert, welche Wörter hinter ### welchem Feld zuzuordnen sind.
-         *
-         * Potenzielle Fehlerquelle ein Feld wird mehrfach erwähnt.
-        /*
-
-
-    }
-}
 #endif 
