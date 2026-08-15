@@ -1,3 +1,5 @@
-Files can be tricky, but it is fun enough!
+#seperator:;
+#notetype:Zusatzinfo_(Automatisieren)V_2
+html:true
 
-LOL HS.
+test

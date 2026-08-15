@@ -9,9 +9,9 @@
 
     struct Card {
         string Question         = "";
+        string Answer           = "";
         string Prerequisites    = "";
         string Hint             = "";
-        string Answer           = "";
         string Add_Information  = "";
         string Source           = "";
     };

@@ -32,4 +32,6 @@ int main(){
     cout << "Antwort: " << first.Answer;
     cout << "Hinweis: " << first.Hint;
 
+    write_preamble("/home/Matti/Projekte/Markdown-to-Anki-Converter/Output/file.txt");
+    write_card_to_file("/home/Matti/Projekte/Markdown-to-Anki-Converter/Output/file.txt", {});
 }
