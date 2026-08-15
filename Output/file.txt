@@ -1,5 +1,15 @@
 #seperator:;
-#notetype:Zusatzinfo_(Automatisieren)V_2
-html:true
+#notetype:Automatic_Cloze
+#html:true
 
-test
+# first
+Line over multiple lines
+
+- second
+- third
+
+;;
+
+test LOLLOLOLOL
+
+;;

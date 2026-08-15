@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 bool isValidPath(string Path){
@@ -51,12 +52,12 @@ string read_Card(std::ios::pos_type begining, std::ios::pos_type end, string fil
 auto write_preamble(std::string path) -> void {
     std::ofstream output_file(path);
     output_file << "#seperator:;" << '\n';
-    output_file << "#notetype:Zusatzinfo_(Automatisieren)V_2" << '\n';
-    output_file << "html:true" << '\n';
+    output_file << "#notetype:Automatic_Cloze" << '\n';
+    output_file << "#html:true" << '\n';
     output_file << endl;
 }
 
 auto write_card_to_file(std::string path, Card card) -> void{
     std::ofstream file(path, ios::app);
-    file << "test";
+    file << card.Question << card.Answer << ";" << card.Prerequisites << ";" << card.Hint << ";" << card.Add_Information << ";" << card.Source;
 }
