@@ -3,6 +3,7 @@
 
 #include<string>
 #include<vector>
+#include<iostream>
 
 // --- Structs and Enums ---
 
@@ -22,10 +23,10 @@ struct Block {
 
 auto parser(std::string text) -> std::string;
 
-// Block Parser 
+// Block Parser
 
 auto parse_into_blocks  (std::string & text) -> std::vector<Block>;
-auto parse_split_lines(std::string_view text) -> std::vector<std::string>;
+auto parse_split_lines(std::string text) -> std::vector<std::string>;
 
 auto begining_of_block(std::string line) -> BlockType;
 
@@ -41,30 +42,7 @@ auto parse_listblock    (std::vector<std::string> lines, size_t & index) -> Bloc
 
 auto parse_paragraph(std::vector<std::string> lines, size_t& index) -> Block;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// --- Line Parser ---
 
 enum class InlineType {
     Text,
@@ -85,18 +63,22 @@ struct Inline {
 };
 
 
-// Line Parser
 
-auto parse_inlines(std::string_view text) -> std::vector<Inline>;
+auto parse_inlines(std::string text) -> std::vector<Inline>;
 
-auto parse_linebreak    (std::string & text) -> void;
-auto parse_inlinemath   (std::string & text) -> void;
-auto parse_inlinecode   (std::string & text) -> void;
-auto parse_highlights   (std::string & text) -> void;
-auto parse_cloze        (std::string & text) -> void;
-auto parse_image        (std::string & text) -> void;
-auto parse_link         (std::string & text) -> void;
-auto parse_charakters   (std::string & text) -> void;
+auto begining_of_inline(std::string text, size_t index) -> InlineType;
+
+auto parse_codeinline   (std::string & text, size_t & index) -> Inline;
+    auto begining_of_codeinline(std::string & text, size_t index) -> bool;
+    auto end_of_codeinline(std::string & text, size_t index) -> bool;
+auto parse_mathinline   (std::string & text, size_t & index) -> Inline;
+    auto begining_of_mathinline(std::string & text, size_t index) -> bool;
+    auto end_of_mathinline(std::string & text, size_t & index) -> bool;
+auto parse_highlights   (std::string & text, size_t & index) -> Inline;
+auto parse_cloze        (std::string & text, size_t & index) -> Inline;
+auto parse_image        (std::string & text, size_t & index) -> Inline;
+auto parse_link         (std::string & text, size_t & index) -> Inline;
+auto parse_text         (std::string & text, size_t & index) -> Inline;
 
 
 #endif

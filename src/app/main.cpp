@@ -14,7 +14,7 @@ using std::endl;
 
 int main(){
     string filePath = "";
-    cout << "Please paste file path for a file you want converted to Anki cards: ";
+    cout << "Please paste file path for a file you want converted to Anki cards: " << std::endl;
     //cin >> filePath;
     filePath = "/home/Matti/Projekte/Markdown-to-Anki-Converter/Output/md_file.md";
 
@@ -28,10 +28,15 @@ int main(){
     std::map<std::string, fields> keywords;
     keywords.insert({"### Hinweis:", fields::Hint});
     Card first = split_text(s, keywords);
+    /*
     cout << "Frage: " << first.Question;
     cout << "Antwort: " << first.Answer;
     cout << "Hinweis: " << first.Hint;
+    */
 
     write_preamble("/home/Matti/Projekte/Markdown-to-Anki-Converter/Output/file.txt");
     write_card_to_file("/home/Matti/Projekte/Markdown-to-Anki-Converter/Output/file.txt", first);
+
+
+    parser(first.Answer);
 }
