@@ -59,5 +59,5 @@ auto write_preamble(std::string path) -> void {
 
 auto write_card_to_file(std::string path, Card card) -> void{
     std::ofstream file(path, ios::app);
-    file << card.Question << card.Answer << ";" << card.Prerequisites << ";" << card.Hint << ";" << card.Add_Information << ";" << card.Source;
+    file << '\"' << card.Question << "<br><br>" << "{{c1::"<< card.Answer << "}}" << '\"' << ";" << '\"' << card.Prerequisites << '\"' << ";" << '\"' << card.Hint << '\"' << ";" << '\"' << card.Add_Information << '\"' << ";" << '\"' << card.Source << '\"';
 }

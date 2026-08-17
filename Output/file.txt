@@ -2,9 +2,9 @@
 #notetype:Automatic_Cloze
 #html:true
 
-# first
+"# first
 Line over multiple lines
-
+<br><br>{{c1::
 Ok Text mit $f(x)$ und `code` bla bla bla.
 
 - second
@@ -20,8 +20,8 @@ $$
 f(x)
 $$
 
-;;
+}}";"";"
 
 test LOLLOLOLOL
 
-;;
+";"";""
