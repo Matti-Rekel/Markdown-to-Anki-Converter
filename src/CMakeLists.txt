@@ -1,4 +1,5 @@
-add_subdirectory(app)
+add_subdirectory(App)
 add_subdirectory(libFileHandler)
-add_subdirectory(libFormatter)
-add_subdirectory(libParser)
+add_subdirectory(libCardParser)
+#add_subdirectory(libMarkdownParser)
+#add_subdirectory(libHtmlRenderer)
