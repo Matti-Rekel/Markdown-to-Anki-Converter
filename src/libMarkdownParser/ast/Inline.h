@@ -4,4 +4,5 @@
 
 class Inline : public Node
 {
+    virtual ~Inline() = default;
 };
