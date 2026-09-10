@@ -8,4 +8,5 @@ target_include_directories(Converter
 target_link_libraries(Converter
     FileHandler
     CardParser
+    MarkdownParser
 )

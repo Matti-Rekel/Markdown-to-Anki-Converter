@@ -1,3 +1,12 @@
-add_library(Parser Parser.cpp)
+add_library(MarkdownParser
+    Cursor.cpp
 
-target_include_directories(Parser PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+    parser/Parser.cpp
+    parser/BlockParser.cpp
+    parser/InlineParser.cpp
+)
+
+target_include_directories(MarkdownParser
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)

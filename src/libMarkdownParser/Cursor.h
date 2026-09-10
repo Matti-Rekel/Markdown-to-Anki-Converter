@@ -2,12 +2,19 @@
 
 #include <string_view>
 
+struct Range
+{
+    size_t start;
+    size_t end;
+};
+
 class Cursor
 {
   public:
     explicit Cursor(std::string_view content_);
 
     auto get_position() const -> size_t;
+    auto change_position_to(size_t pos_) -> void;
     auto get_size() const -> size_t;
     auto is_end_of() const -> bool;
 

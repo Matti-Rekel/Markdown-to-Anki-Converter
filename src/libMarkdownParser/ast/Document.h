@@ -6,5 +6,6 @@
 
 class Document
 {
-    std::vector<std::unique_ptr<Block>> Nodes;
+  public:
+    std::vector<std::unique_ptr<Block>> children;
 };

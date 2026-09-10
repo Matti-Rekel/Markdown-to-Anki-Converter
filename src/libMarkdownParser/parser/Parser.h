@@ -1,11 +1,11 @@
 #pragma once
 
 #include "BlockParser.h"
-#include "Document.h"
+#include "ast/Document.h"
 #include <string_view>
 
 class Parser
 {
   public:
-    Document parse(std::string_view source);
+    static auto parse(std::string_view source) -> Document;
 };

@@ -4,6 +4,7 @@
 
 #include "FileInput.h"
 #include "ParseCards.h"
+#include "parser/Parser.h"
 
 int main()
 {
@@ -18,4 +19,5 @@ int main()
     {
         std::cout << card.Answer << std::endl;
     }
+    Parser::parse({"# Überschrift"});
 }

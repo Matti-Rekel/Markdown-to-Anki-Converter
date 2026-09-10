@@ -3,6 +3,7 @@
 Cursor::Cursor(std::string_view content_) : content(content_) { size = content_.size(); }
 
 auto Cursor::get_position() const -> size_t { return pos; }
+auto Cursor::change_position_to(size_t pos_) -> void { pos = pos_; };
 auto Cursor::get_size() const -> size_t { return size; }
 auto Cursor::is_end_of() const -> bool { return pos >= size; }
 
@@ -40,7 +41,7 @@ auto Cursor::peek_line() const -> std::string_view
 }
 
 auto Cursor::peek_range(std::size_t range) const -> std::string_view { return content.substr(pos, range); }
-auto Cursor::starts_with(std::string_view text) const -> bool { return peek_string(text.size()) == text; }
+auto Cursor::starts_with(std::string_view text) const -> bool { return peek_range(text.size()) == text; }
 auto Cursor::consume_range(size_t range) -> std::string_view
 {
     const auto result = content.substr(pos, range);
