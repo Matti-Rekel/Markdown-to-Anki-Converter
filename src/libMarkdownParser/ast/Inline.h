@@ -14,3 +14,9 @@ class Text : public Inline
   public:
     std::string text;
 };
+
+class InlineMath : public Inline
+{
+  public:
+    std::string equation;
+};

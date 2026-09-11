@@ -17,10 +17,11 @@ auto HeadingParser::parse(Cursor& cursor) -> std::unique_ptr<Heading>
     const auto range = determine_range(cursor);
 
     auto heading = std::make_unique<Heading>();
+    Cursor inlineCursor(cursor.consume_range(range.end - range.start));
 
-    while (cursor.get_position() != range.end)
+    while (inlineCursor.get_position() != range.end)
     {
-        heading->children.push_back(InlineParser::parse_inline(cursor, range));
+        heading->children.push_back(InlineParser::parse_inline(inlineCursor));
     }
 
     return heading;

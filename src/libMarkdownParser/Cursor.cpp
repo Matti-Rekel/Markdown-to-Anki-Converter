@@ -49,3 +49,5 @@ auto Cursor::consume_range(size_t range) -> std::string_view
 
     return result;
 }
+
+auto Cursor::get_content() const -> std::string_view { return content; }

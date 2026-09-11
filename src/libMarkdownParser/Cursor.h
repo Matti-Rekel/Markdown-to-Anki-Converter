@@ -27,6 +27,8 @@ class Cursor
     auto starts_with(std::string_view text) const -> bool;
     auto consume_range(size_t range) -> std::string_view;
 
+    auto get_content() const -> std::string_view;
+
   private:
     std::string_view content;
     size_t pos = 0;
