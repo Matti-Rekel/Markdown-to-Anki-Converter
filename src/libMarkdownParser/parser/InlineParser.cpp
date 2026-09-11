@@ -9,3 +9,6 @@ auto InlineParser::parse_inline(Cursor& cursor) -> std::unique_ptr<Inline>
 
     return TextParser::parse(cursor);
 }
+auto TextParser::parse(Cursor& cursor) -> std::unique_ptr<Text>{
+    return {};
+}
