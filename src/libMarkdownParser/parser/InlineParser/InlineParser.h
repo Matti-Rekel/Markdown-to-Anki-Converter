@@ -8,6 +8,7 @@ class InlineParser
 {
   public:
     static auto parse_inline(Cursor& cursor) -> std::unique_ptr<Inline>;
+    static auto starts_inline(Cursor cursor) -> bool;
 };
 
 class TextParser

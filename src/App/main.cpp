@@ -15,9 +15,19 @@ int main()
     std::map<std::string, fields> keywords;
     keywords.insert({"### Hinweis:", fields::Hint});
     auto cards = parse_into_cards(content, keywords);
-    for (auto card : cards)
+    Document res = Parser::parse({"# Überschrift"});
+
+    for (const auto& block : res.children)
     {
-        std::cout << card.Answer << std::endl;
+        if (auto* heading = dynamic_cast<Heading*>(block.get()))
+        {
+            for (const auto& child : heading->children)
+            {
+                if (auto* text = dynamic_cast<Text*>(child.get()))
+                {
+                    std::cout << text->text << std::endl;
+                }
+            }
+        }
     }
-    Parser::parse({"# Überschrift"});
 }

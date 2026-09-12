@@ -1,6 +1,5 @@
 
 #include "Parser.h"
-#include "BlockParser.h"
 
 auto Parser::parse(std::string_view source) -> Document
 {

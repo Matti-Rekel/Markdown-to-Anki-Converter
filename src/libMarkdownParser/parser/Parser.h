@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BlockParser.h"
+#include "BlockParser/BlockParser.h"
 #include "ast/Document.h"
 #include <string_view>
 
