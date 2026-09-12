@@ -15,7 +15,7 @@ int main()
     std::map<std::string, fields> keywords;
     keywords.insert({"### Hinweis:", fields::Hint});
     auto cards = parse_into_cards(content, keywords);
-    Document res = Parser::parse({"# Überschrift"});
+    Document res = Parser::parse({"# Überschrift $(a+b)^2 = a^2 +2ab + b^2$ und mehr Text"});
 
     for (const auto& block : res.children)
     {
