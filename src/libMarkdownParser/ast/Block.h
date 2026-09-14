@@ -17,7 +17,7 @@ class Paragraph : public Block
   public:
     std::vector<std::unique_ptr<Inline>> children;
 
-    virtual ~Paragraph() = default;
+    void accept(Visitor& visitor) override;
 };
 
 class Heading : public Block
@@ -25,10 +25,6 @@ class Heading : public Block
   public:
     std::vector<std::unique_ptr<Inline>> children;
     unsigned int level;
-};
 
-class CodeBlock : public Block
-{
-  public:
-    std::string code;
+    void accept(Visitor& visitor) override;
 };

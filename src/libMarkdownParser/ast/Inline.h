@@ -13,10 +13,14 @@ class Text : public Inline
 {
   public:
     std::string text;
+
+    void accept(Visitor& visitor) override;
 };
 
 class InlineMath : public Inline
 {
   public:
     std::string equation;
+
+    void accept(Visitor& visitor) override;
 };
