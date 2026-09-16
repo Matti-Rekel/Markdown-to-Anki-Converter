@@ -14,7 +14,7 @@ class Text : public Inline
   public:
     std::string text;
 
-    void accept(Visitor& visitor) override;
+    void accept(Visitor& visitor) override { visitor.visit(*this); }
 };
 
 class InlineMath : public Inline
@@ -22,5 +22,5 @@ class InlineMath : public Inline
   public:
     std::string equation;
 
-    void accept(Visitor& visitor) override;
+    void accept(Visitor& visitor) override { visitor.visit(*this); }
 };

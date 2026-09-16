@@ -17,7 +17,7 @@ class Paragraph : public Block
   public:
     std::vector<std::unique_ptr<Inline>> children;
 
-    void accept(Visitor& visitor) override;
+    void accept(Visitor& visitor) override { visitor.visit(*this); }
 };
 
 class Heading : public Block
@@ -26,5 +26,5 @@ class Heading : public Block
     std::vector<std::unique_ptr<Inline>> children;
     unsigned int level;
 
-    void accept(Visitor& visitor) override;
+    void accept(Visitor& visitor) override { visitor.visit(*this); }
 };
