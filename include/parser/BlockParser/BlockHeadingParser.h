@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../InlineParser/InlineParser.h"
 #include "BlockParser.h"
+#include "parser/InlineParser/InlineParser.h"
 
 class HeadingParser
 {

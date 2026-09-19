@@ -1,4 +1,4 @@
-#include "InlineMathParser.h"
+#include "parser/InlineParser/InlineMathParser.h"
 
 auto InlineMathParser::is_inlineMath(Cursor cursor) -> bool { return cursor.starts_with({"$"}); }
 

@@ -7,7 +7,7 @@
 class AnkiRenderer : public Visitor
 {
   public:
-    void render(Document& node) override;
+    void render(Document& node);
     void visit(Paragraph& node) override;
     void visit(Heading& node) override;
     void visit(Text& node) override;

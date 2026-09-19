@@ -1,6 +1,6 @@
-#include "BlockHeadingParser.h"
-#include "../../Cursor.h"
+#include "parser/BlockParser/BlockHeadingParser.h"
 #include "ast/Inline.h"
+#include "parser/Cursor.h"
 #include <memory>
 
 auto HeadingParser::is_blockHeading(Cursor cursor) -> bool { return cursor.starts_with({"#"}); }

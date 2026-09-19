@@ -1,8 +1,8 @@
-#include "AnkiRenderer.h"
+#include "visitor/AnkiRenderer.h"
 
-#include "../libMarkdownParser/ast/Block.h"
-#include "../libMarkdownParser/ast/Document.h"
-#include "../libMarkdownParser/ast/Inline.h"
+#include "ast/Block.h"
+#include "ast/Document.h"
+#include "ast/Inline.h"
 
 void AnkiRenderer::render(Document& node)
 {

@@ -1,6 +1,6 @@
-#include "BlockParagraphParser.h"
-#include "../InlineParser/InlineParser.h"
-#include "BlockParser.h"
+#include "parser/BlockParser/BlockParagraphParser.h"
+#include "parser/BlockParser/BlockParser.h"
+#include "parser/InlineParser/InlineParser.h"
 #include <iostream>
 
 auto ParagraphParser::parse(Cursor& cursor) -> std::unique_ptr<Paragraph>

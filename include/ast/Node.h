@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../libHtmlRenderer/Visitor.h"
+#include "visitor/Visitor.h"
 
 class Node
 {

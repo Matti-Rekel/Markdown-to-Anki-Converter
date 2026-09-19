@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Cursor.h"
 #include "ast/Inline.h"
+#include "parser/Cursor.h"
 #include <memory>
 
 class InlineParser

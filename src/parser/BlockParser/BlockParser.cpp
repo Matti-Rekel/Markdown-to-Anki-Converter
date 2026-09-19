@@ -1,9 +1,9 @@
-#include "BlockParser.h"
-#include "../InlineParser/InlineParser.h"
-#include "BlockHeadingParser.h"
-#include "BlockParagraphParser.h"
-#include "Cursor.h"
+#include "parser/BlockParser/BlockParser.h"
 #include "ast/Block.h"
+#include "parser/BlockParser/BlockHeadingParser.h"
+#include "parser/BlockParser/BlockParagraphParser.h"
+#include "parser/Cursor.h"
+#include "parser/InlineParser/InlineParser.h"
 #include <memory>
 
 auto BlockParser::parse_block(Cursor& cursor) -> std::unique_ptr<Block>

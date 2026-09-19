@@ -1,5 +1,5 @@
-#include "InlineParser.h"
-#include "InlineMathParser.h"
+#include "parser/InlineParser/InlineParser.h"
+#include "parser/InlineParser/InlineMathParser.h"
 #include <memory>
 
 auto InlineParser::parse_inline(Cursor& cursor) -> std::unique_ptr<Inline>

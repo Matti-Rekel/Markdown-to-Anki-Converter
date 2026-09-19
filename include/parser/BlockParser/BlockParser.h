@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Cursor.h"
 #include "ast/Block.h"
+#include "parser/Cursor.h"
 #include <memory>
 
 class BlockParser
