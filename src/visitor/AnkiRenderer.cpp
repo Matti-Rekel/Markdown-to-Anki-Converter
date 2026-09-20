@@ -6,39 +6,16 @@
 
 void AnkiRenderer::render(Document& node)
 {
-    for (auto& child : node.children)
+    for (size_t i = 0; i < node.children.size(); i++)
     {
-        child->accept(*this);
+        while (/*is not level two heading */)
+        {
+            // add the ast to the card
+        }
+    }
+    for (/* for each card found*/)
+    {
+        // determine each field type and then the card type
+        // output += render_card(); for each card type the render_card function should behave diffrently
     }
 }
-
-void AnkiRenderer::visit(Paragraph& node)
-{
-    for (auto& child : node.children)
-    {
-        child->accept(*this);
-    }
-
-    output += "\n";
-}
-
-void AnkiRenderer::visit(Heading& node)
-{
-    for (auto& child : node.children)
-    {
-        child->accept(*this);
-    }
-
-    output += "\n";
-}
-
-void AnkiRenderer::visit(Text& node) { output += node.text; }
-
-void AnkiRenderer::visit(InlineMath& node)
-{
-    output += "$";
-    output += node.equation;
-    output += "$";
-}
-
-const std::string& AnkiRenderer::getOutput() const { return output; }
