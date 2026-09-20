@@ -11,8 +11,6 @@ class Visitor
   public:
     virtual ~Visitor() = default;
 
-    virtual void visit(Document& node) = 0;
-
     virtual void visit(Paragraph& node) = 0;
     virtual void visit(Heading& node) = 0;
 

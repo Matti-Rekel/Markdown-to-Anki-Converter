@@ -19,15 +19,17 @@ enum class CardType
 };
 class Field
 {
-    auto determine_fieldType() -> FieldType;
+  public:
+    static auto determine_fieldType(Field const& field) -> FieldType;
 
-    std::vector<std::unique_ptr<Block>> children;
+    std::vector<Block const*> children;
     FieldType fieldType;
 };
 
 class Card
 {
-    auto determine_cardType() -> CardType;
+  public:
+    static auto determine_cardType(Card const& card) -> CardType;
 
     std::vector<Field> fields;
     CardType cardType;
@@ -36,8 +38,9 @@ class Card
 class AnkiRenderer : public Visitor
 {
   public:
-    void render(Document& node);
-    auto split_into_cards() -> std::vector<Card>;
+    void render(Document const& document);
+    auto split_into_cards(Document const& node) -> std::vector<Card>;
+    auto render_card(Card const& card) -> std::string;
 
     void visit(Paragraph& node) override;
     void visit(Heading& node) override;
