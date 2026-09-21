@@ -2,6 +2,7 @@
 
 #include "Visitor.h"
 #include "ast/Block.h"
+#include "ast/Document.h"
 
 #include <memory>
 #include <string>
@@ -34,8 +35,10 @@ class Card
 
 class CardParser
 {
+  public:
     static auto split_into_cards(Document const& node) -> std::vector<Card>;
     static auto consume_card(Document const& document, size_t& i) -> Card;
+    static auto consume_field(Document const& document, size_t& i) -> Field;
 
     static auto determine_cardType(Card const& card) -> CardType;
     static auto is_cloze_card(Card const& card) -> bool;

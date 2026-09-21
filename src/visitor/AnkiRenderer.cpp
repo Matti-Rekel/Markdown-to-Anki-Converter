@@ -16,14 +16,13 @@ auto CardParser::determine_cardType(const Card& card) -> CardType
     {
         field.fieldType = CardParser::determine_fieldType(field);
     }
-    // TODO
 
     if (is_cloze_card(card))
         return CardType::Cloze;
 
     return CardType::Basic;
 }
-auto is_cloze_card(Card const& card) -> bool { return card.fields.at(2).fieldType == FieldType::Cloze; }
+auto CardParser::is_cloze_card(Card const& card) -> bool { return card.fields.at(2).fieldType == FieldType::Cloze; }
 
 void AnkiRenderer::render(Document const& node)
 {
@@ -41,53 +40,75 @@ auto CardParser::split_into_cards(Document const& document) -> std::vector<Card>
 {
     std::vector<Card> result;
 
-    for (std::size_t i = 0; i < document.children.size(); ++i)
+    std::size_t i = 0;
+
+    while (i < document.children.size())
     {
         auto* cardHeading = dynamic_cast<Heading const*>(document.children[i].get());
 
         if (cardHeading && cardHeading->level == 2)
+        {
             result.push_back(consume_card(document, i));
+        }
+        else
+        {
+            ++i;
+        }
     }
 
     return result;
 }
 
-auto AnkiRenderer::consume_card(Document const& document, std::size_t& i) -> Card
+auto CardParser::consume_card(Document const& document, std::size_t& i) -> Card
 {
     Card result;
 
-    // The ## heading starts the question field.
-    Field field;
-    field.children.push_back(document.children.at(i).get());
-    result.fields.push_back(std::move(field));
+    // ## Question starts the card and belongs to its own field.
+    Field question;
+    question.children.push_back(document.children.at(i).get());
+    result.fields.push_back(std::move(question));
 
     ++i;
 
     while (i < document.children.size())
     {
-        // TODO currently the Answer will be part of the question field
-        auto* heading = dynamic_cast<Heading const*>(document.children[i].get());
+        auto* heading = dynamic_cast<Heading const*>(document.children.at(i).get());
 
-        // We reached the beginning of the next card.
+        // The next ## heading starts the next card.
         if (heading && heading->level == 2)
-        {
-            --i;
             break;
-        }
 
-        // We reached the beginning of a new field.
+        result.fields.push_back(consume_field(document, i));
+    }
+
+    return result;
+}
+
+auto CardParser::consume_field(Document const& document, std::size_t& i) -> Field
+{
+    Field result;
+
+    // A ### heading starts a field and belongs to that field.
+    if (i < document.children.size())
+    {
+        auto* heading = dynamic_cast<Heading const*>(document.children.at(i).get());
+
         if (heading && heading->level == 3)
         {
-            Field newField;
-            newField.children.push_back(document.children[i].get());
-            result.fields.push_back(std::move(newField));
+            result.children.push_back(document.children.at(i).get());
+            ++i;
         }
-        else
-        {
-            // Add the node to the current field.
-            result.fields.back().children.push_back(document.children[i].get());
-        }
+    }
 
+    // Consume everything until the next heading.
+    while (i < document.children.size())
+    {
+        auto* heading = dynamic_cast<Heading const*>(document.children.at(i).get());
+
+        if (heading && (heading->level == 2 || heading->level == 3))
+            break;
+
+        result.children.push_back(document.children.at(i).get());
         ++i;
     }
 
