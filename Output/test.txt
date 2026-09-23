@@ -1,1 +1,10 @@
-"test ob \n interpretiert wird";"Antwort";
+#separator:;
+#notetype:Basic
+#html:true
+#deck column:1
+#notetype column:2
+#tags column:3
+#guid column:4
+
+"1. Test";"Basic";"";"";"Frage";"Antwort"
+"2. Test";"Basic";"TEST";"";"Frage";"Antwort"

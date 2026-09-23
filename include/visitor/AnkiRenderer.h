@@ -4,16 +4,24 @@
 #include "ast/Block.h"
 #include "ast/Document.h"
 
-#include <memory>
+#include <map>
 #include <string>
 #include <vector>
 
+// Extension: If you want a new fieldType to be supported you need to add/change:
+// - enum class FieldType
+// - determine_fieldType
+// - FieldKeywordMap (There is currently one in CardParser and another one in determine_cardType)
 enum class FieldType
 {
     Question,
     Answer,
     Cloze
 };
+
+// Extension: If you want a new CardType to be supported you need to add/change:
+// - enum class CardType
+// - determine_cardType
 enum class CardType
 {
     Basic,
@@ -43,7 +51,11 @@ class CardParser
     static auto determine_cardType(Card const& card) -> CardType;
     static auto is_cloze_card(Card const& card) -> bool;
 
-    static auto determine_fieldType(Field const& field) -> FieldType;
+    static std::map<std::string, FieldType> FieldKeywordMap;
+    static auto determine_fieldType(Field const& field, std::map<std::string, FieldType> FieldKeywordMap) -> FieldType;
+    static auto determine_keyword_in_heading(Heading const& heading, std::map<std::string, FieldType> keywordMap)
+        -> FieldType;
+    static auto field_contains_cloze(Field const& field) -> bool;
 };
 
 class AnkiRenderer : public Visitor
