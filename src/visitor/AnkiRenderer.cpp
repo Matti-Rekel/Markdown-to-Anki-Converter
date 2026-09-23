@@ -80,18 +80,6 @@ auto CardParser::determine_cardType(const Card& card) -> CardType
 }
 auto CardParser::is_cloze_card(Card const& card) -> bool { return card.fields.at(2).fieldType == FieldType::Cloze; }
 
-void AnkiRenderer::render(Document const& node)
-{
-    auto cards = CardParser::split_into_cards(node);
-
-    for (auto& card : cards)
-    {
-        card.cardType = CardParser::determine_cardType(card);
-
-        output += render_card(card);
-    }
-}
-
 auto CardParser::split_into_cards(Document const& document) -> std::vector<Card>
 {
     std::vector<Card> result;
@@ -192,12 +180,48 @@ auto CardParser::consume_field(Document const& document, std::size_t& i) -> Fiel
 
     return result;
 }
+AnkiRenderer::AnkiRenderer(Document const& document) { render(document); }
 
+void AnkiRenderer::render(Document const& node)
+{
+    auto cards = CardParser::split_into_cards(node);
+
+    for (auto& card : cards)
+    {
+        card.cardType = CardParser::determine_cardType(card);
+
+        output += render_card(card);
+    }
+}
 auto AnkiRenderer::render_card(Card const& card) -> std::string
 {
-    // TODO:
-    return {};
+    switch (card.cardType)
+    {
+    case CardType::Basic:
+    {
+        return render_basic_card(card);
+    }
+    case CardType::Cloze:
+    {
+        return render_cloze_card(card);
+    }
+    }
 }
+
+auto AnkiRenderer::render_basic_card(Card const& card) -> std::string
+{
+    std::string result;
+    result = "\"imported Cards\"" + ";" + "\"A_basic\"" + ";" + "\"\"" + ";" + "\"\"" + ";";
+
+    for (auto field : card.fields)
+        for (auto node : field.children)
+        {
+            visit(node);
+        }
+}
+return {};
+}
+
 void AnkiRenderer::visit(Paragraph& node)
 {
     // TODO

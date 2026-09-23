@@ -61,8 +61,12 @@ class CardParser
 class AnkiRenderer : public Visitor
 {
   public:
+    AnkiRenderer() = delete;
+    AnkiRenderer(Document const& document);
     void render(Document const& document);
     auto render_card(Card const& card) -> std::string;
+    auto render_basic_card(Card const& card) -> std::string;
+    auto render_cloze_card(Card const& card) -> std::string;
 
     void visit(Paragraph& node) override;
     void visit(Heading& node) override;
