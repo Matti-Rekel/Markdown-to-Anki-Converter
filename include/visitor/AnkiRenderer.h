@@ -24,6 +24,7 @@ enum class FieldType
 // - determine_cardType
 enum class CardType
 {
+    None,
     Basic,
     Cloze
 };
@@ -48,7 +49,7 @@ class CardParser
     static auto consume_card(Document const& document, size_t& i) -> Card;
     static auto consume_field(Document const& document, size_t& i) -> Field;
 
-    static auto determine_cardType(Card const& card) -> CardType;
+    static auto determine_cardType(Card& card) -> CardType;
     static auto is_cloze_card(Card const& card) -> bool;
 
     static std::map<std::string, FieldType> FieldKeywordMap;
@@ -58,22 +59,30 @@ class CardParser
     static auto field_contains_cloze(Field const& field) -> bool;
 };
 
-class AnkiRenderer : public Visitor
+class AnkiRenderer
 {
   public:
-    AnkiRenderer() = delete;
+    AnkiRenderer() = default;
     AnkiRenderer(Document const& document);
-    void render(Document const& document);
+    auto render(Document const& document) -> std::string;
     auto render_card(Card const& card) -> std::string;
     auto render_basic_card(Card const& card) -> std::string;
     auto render_cloze_card(Card const& card) -> std::string;
 
-    void visit(Paragraph& node) override;
-    void visit(Heading& node) override;
-    void visit(Text& node) override;
-    void visit(InlineMath& node) override;
+  private:
+    std::string output;
+};
 
-    const std::string& getOutput() const;
+class FieldRenderer : public Visitor
+{
+  public:
+    auto render(Field const& field) -> std::string;
+    auto get_output() const -> std::string;
+
+    void visit(Paragraph const& node) override;
+    void visit(Heading const& node) override;
+    void visit(Text const& node) override;
+    void visit(InlineMath const& node) override;
 
   private:
     std::string output;

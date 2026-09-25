@@ -1,9 +1,9 @@
 #include <iostream>
-#include <map>
 #include <string>
 
 #include "io/FileInput.h"
 #include "parser/Parser.h"
+#include "visitor/AnkiRenderer.h"
 
 int main()
 {
@@ -11,5 +11,13 @@ int main()
     filePath = "/home/Matti/Projekte/Markdown-to-Anki-Converter/Output/md_file.md";
 
     auto content = get_file_content(filePath);
-    Document res = Parser::parse({" Überschrift $(a+b)^2 = a^2 +2ab + b^2$ und mehr Text"});
+
+    std::string text;
+    text = "## Überschrift" + '\n';
+    text += "Text";
+
+    Document res = Parser::parse(text);
+    AnkiRenderer renderer;
+    std::string output = renderer.render(res);
+    std::cout << output << std::endl;
 }

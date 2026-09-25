@@ -1,5 +1,6 @@
 #include "ast/Block.h"
 #include "ast/Document.h"
+#include "ast/Inline.h"
 #include "visitor/AnkiRenderer.h"
 
 #include <gtest/gtest.h>
@@ -279,4 +280,222 @@ TEST(CardParserTests, DetermineFieldType_ParagraphWithoutClozeIsAnswer)
     auto fieldType = CardParser::determine_fieldType(field, keywordMap);
 
     EXPECT_TRUE(fieldType == FieldType::Answer);
+}
+
+/* --- Tests for AnkiRenderer --- */
+
+// TODO:
+// - render
+// - render_card
+// - render_cloze_card
+
+/* -- Tests for render_basic_card -- */
+
+TEST(AnkiRendererTests, RenderBasicCard_ExampleRendersCorrectly)
+{
+
+    AnkiRenderer renderer;
+    Card card;
+
+    auto heading1 = new Heading;
+    auto phrase0 = std::make_unique<Text>();
+    phrase0->text = "heading1";
+    heading1->children.push_back(std::move(phrase0));
+    heading1->level = 3;
+
+    auto paragraph1 = new Paragraph;
+    auto phrase1 = std::make_unique<Text>();
+    auto phrase12 = std::make_unique<Text>();
+    phrase1->text = "Paragraph1 Satz 1";
+    phrase12->text = "Paragraph1 Satz 2";
+    paragraph1->children.push_back(std::move(phrase1));
+    paragraph1->children.push_back(std::move(phrase12));
+
+    auto paragraph2 = new Paragraph;
+    auto phrase2 = std::make_unique<Text>();
+    phrase2->text = "Paragraph2";
+    paragraph2->children.push_back(std::move(phrase2));
+
+    Field question;
+    question.fieldType = FieldType::Question;
+    question.children.push_back(heading1);
+    Field answer;
+    answer.children.push_back(paragraph1);
+    answer.children.push_back(paragraph2);
+
+    card.fields.push_back(question);
+    card.fields.push_back(answer);
+
+    std::string result;
+    result += "\"imported Cards\";";
+    result += "\"A_basic\";";
+
+    result += '"';
+    result += "<h3>heading1</h3>";
+    result += "\";";
+
+    result += '"';
+    result += "<p>Paragraph1 Satz 1Paragraph1 Satz 2</p><p>Paragraph2</p>";
+    result += "\";";
+
+    result += '\n';
+
+    EXPECT_TRUE(renderer.render_basic_card(card) == result);
+    delete heading1;
+    delete paragraph1;
+    delete paragraph2;
+}
+
+/* --- Tests for FieldRenderer --- */
+
+/* -- Test for Renderer -- */
+
+TEST(FieldRendererTests, Renderer_EmptyFieldRendersCorrectly)
+{
+
+    FieldRenderer renderer;
+
+    Field field;
+
+    EXPECT_TRUE(renderer.render(field) == "");
+}
+
+TEST(FieldRendererTests, Renderer_HeadingAndParagraphs)
+{
+
+    FieldRenderer renderer;
+
+    auto heading1 = new Heading;
+    auto phrase0 = std::make_unique<Text>();
+    phrase0->text = "heading1";
+    heading1->children.push_back(std::move(phrase0));
+    heading1->level = 3;
+
+    auto paragraph1 = new Paragraph;
+    auto phrase1 = std::make_unique<Text>();
+    auto phrase12 = std::make_unique<Text>();
+    phrase1->text = "Paragraph1 Satz 1";
+    phrase12->text = "Paragraph1 Satz 2";
+    paragraph1->children.push_back(std::move(phrase1));
+    paragraph1->children.push_back(std::move(phrase12));
+
+    auto paragraph2 = new Paragraph;
+    auto phrase2 = std::make_unique<Text>();
+    phrase2->text = "Paragraph2";
+    paragraph2->children.push_back(std::move(phrase2));
+
+    Field field;
+    field.fieldType = FieldType::Question;
+    field.children.push_back(heading1);
+    field.children.push_back(paragraph1);
+    field.children.push_back(paragraph2);
+
+    EXPECT_TRUE(renderer.render(field) ==
+                "<h3>heading1</h3><p>Paragraph1 Satz 1Paragraph1 Satz 2</p><p>Paragraph2</p>");
+    delete heading1;
+    delete paragraph1;
+    delete paragraph2;
+}
+
+TEST(FieldRendererTests, Renderer_ExampleTest)
+{
+
+    FieldRenderer renderer;
+
+    auto paragraph = new Paragraph;
+    auto phrase = std::make_unique<Text>();
+    phrase->text = "abc";
+    paragraph->children.push_back(std::move(phrase));
+
+    Field field;
+    field.fieldType = FieldType::Question;
+    field.children.push_back(paragraph);
+
+    EXPECT_TRUE(renderer.render(field) == "<p>abc</p>");
+    delete paragraph;
+}
+
+/* -- Test for visit Paragraph -- */
+
+TEST(FieldRendererTests, VisitParagraph_EmptyParagraphRendersCorrectly)
+{
+
+    FieldRenderer renderer;
+
+    Paragraph paragraph;
+
+    renderer.visit(paragraph);
+
+    EXPECT_TRUE(paragraph.children.size() == 0);
+    EXPECT_TRUE(renderer.get_output() == "<p></p>");
+}
+
+TEST(FieldRendererTests, VisitParagraph_ExampleTest)
+{
+    FieldRenderer renderer;
+
+    Paragraph paragraph;
+    auto phrase = std::make_unique<Text>();
+    phrase->text = "abc";
+    paragraph.children.push_back(std::move(phrase));
+
+    renderer.visit(paragraph);
+    EXPECT_TRUE(renderer.get_output() == "<p>abc</p>");
+}
+
+/* -- Test for visit Heading -- */
+
+TEST(FieldRendererTests, VisitHeading_EmptyHeadingRendersCorrectly)
+{
+
+    FieldRenderer renderer;
+
+    Heading heading;
+
+    renderer.visit(heading);
+    std::cout << heading.level << std::endl;
+
+    EXPECT_TRUE(heading.level == 0);
+    EXPECT_TRUE(heading.children.size() == 0);
+    EXPECT_TRUE(renderer.get_output() == "<h0></h0>");
+}
+
+TEST(FieldRendererTests, VisitHeading_ExampleTest)
+{
+    FieldRenderer renderer;
+
+    Heading heading;
+    heading.level = 3;
+    auto phrase = std::make_unique<Text>();
+    phrase->text = "abc";
+    heading.children.push_back(std::move(phrase));
+
+    renderer.visit(heading);
+    EXPECT_TRUE(renderer.get_output() == "<h3>abc</h3>");
+}
+
+/* -- Test for visit Text -- */
+
+TEST(FieldRendererTests, VisitText_ExampleTest)
+{
+    FieldRenderer renderer;
+
+    Text phrase;
+    phrase.text = "abc";
+
+    renderer.visit(phrase);
+    EXPECT_TRUE(renderer.get_output() == "abc");
+}
+
+/* -- Test for visit InlineMath -- */
+
+TEST(FieldRendererTests, VisitInlineMath_ExampleTest)
+{
+    FieldRenderer renderer;
+
+    InlineMath inlineMath;
+    inlineMath.equation = "a + b";
+
+    renderer.visit(inlineMath);
+    EXPECT_TRUE(renderer.get_output() == "$a + b$");
 }

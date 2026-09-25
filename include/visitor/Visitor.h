@@ -11,9 +11,9 @@ class Visitor
   public:
     virtual ~Visitor() = default;
 
-    virtual void visit(Paragraph& node) = 0;
-    virtual void visit(Heading& node) = 0;
+    virtual void visit(Paragraph const& node) = 0;
+    virtual void visit(Heading const& node) = 0;
 
-    virtual void visit(Text& node) = 0;
-    virtual void visit(InlineMath& node) = 0;
+    virtual void visit(Text const& node) = 0;
+    virtual void visit(InlineMath const& node) = 0;
 };

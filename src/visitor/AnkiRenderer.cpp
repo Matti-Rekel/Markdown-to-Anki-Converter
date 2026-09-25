@@ -62,13 +62,13 @@ auto CardParser::field_contains_cloze(Field const& field) -> bool
     return false;
 }
 
-auto CardParser::determine_cardType(const Card& card) -> CardType
+auto CardParser::determine_cardType(Card& card) -> CardType
 {
 
     // TODO: this should be replaced by a Map which can be customised
     std::map<std::string, FieldType> keywordMap;
 
-    for (auto field : card.fields)
+    for (auto& field : card.fields)
     {
         field.fieldType = CardParser::determine_fieldType(field, keywordMap);
     }
@@ -182,7 +182,7 @@ auto CardParser::consume_field(Document const& document, std::size_t& i) -> Fiel
 }
 AnkiRenderer::AnkiRenderer(Document const& document) { render(document); }
 
-void AnkiRenderer::render(Document const& node)
+auto AnkiRenderer::render(Document const& node) -> std::string
 {
     auto cards = CardParser::split_into_cards(node);
 
@@ -192,6 +192,8 @@ void AnkiRenderer::render(Document const& node)
 
         output += render_card(card);
     }
+
+    return output;
 }
 auto AnkiRenderer::render_card(Card const& card) -> std::string
 {
@@ -206,38 +208,93 @@ auto AnkiRenderer::render_card(Card const& card) -> std::string
         return render_cloze_card(card);
     }
     }
+    return {};
 }
 
 auto AnkiRenderer::render_basic_card(Card const& card) -> std::string
 {
-    std::string result;
-    result = "\"imported Cards\"" + ";" + "\"A_basic\"" + ";" + "\"\"" + ";" + "\"\"" + ";";
+    FieldRenderer fieldRenderer;
+    std::string question;
+    std::string answer;
 
-    for (auto field : card.fields)
-        for (auto node : field.children)
+    for (auto const& field : card.fields)
+    {
+        switch (field.fieldType)
         {
-            visit(node);
+        case FieldType::Question:
+        {
+            question += fieldRenderer.render(field);
+            break;
         }
-}
-return {};
+        default:
+        {
+            answer += fieldRenderer.render(field);
+            break;
+        }
+        }
+    }
+
+    std::string result;
+
+    result += "\"imported Cards\";";
+    result += "\"A_basic\";";
+
+    result += '"';
+    result += question;
+    result += "\";";
+
+    result += '"';
+    result += answer;
+    result += "\";";
+
+    result += '\n';
+
+    return result;
 }
 
-void AnkiRenderer::visit(Paragraph& node)
+auto AnkiRenderer::render_cloze_card(Card const& card) -> std::string { return {}; }
+
+auto FieldRenderer::render(Field const& field) -> std::string
 {
-    // TODO
+    output.clear();
+
+    for (auto const* node : field.children)
+    {
+        node->accept(*this);
+    }
+
+    return output;
 }
 
-void AnkiRenderer::visit(Heading& node)
+auto FieldRenderer::get_output() const -> std::string { return output; }
+
+void FieldRenderer::visit(Paragraph const& node)
 {
-    // TODO
+    output += "<p>";
+    for (auto const& child : node.children)
+    {
+        child->accept(*this);
+    }
+
+    output += "</p>";
 }
 
-void AnkiRenderer::visit(Text& node)
+void FieldRenderer::visit(Heading const& node)
 {
-    // TODO
+    output += "<h" + std::to_string(node.level) + ">";
+    for (auto const& child : node.children)
+    {
+        child->accept(*this);
+    }
+
+    output += "</h" + std::to_string(node.level) + ">";
 }
 
-void AnkiRenderer::visit(InlineMath& node)
+void FieldRenderer::visit(Text const& node) { output += node.text; }
+
+void FieldRenderer::visit(InlineMath const& node)
 {
-    // TODO
+    output += '$';
+    output += node.equation;
+    output += '$';
 }
