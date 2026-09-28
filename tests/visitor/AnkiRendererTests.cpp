@@ -476,6 +476,17 @@ TEST(FieldRendererTests, VisitHeading_ExampleTest)
 
 /* -- Test for visit Text -- */
 
+TEST(FieldRendererTests, VisitText_AllSymbolsEscapedCorrectly)
+{
+    FieldRenderer renderer;
+
+    Text phrase;
+    phrase.text = "< > & \" \' \n";
+
+    renderer.visit(phrase);
+    EXPECT_EQ(renderer.get_output(), "&lt; &gt; &amp; &quot; &#39; <br>");
+}
+
 TEST(FieldRendererTests, VisitText_ExampleTest)
 {
     FieldRenderer renderer;
