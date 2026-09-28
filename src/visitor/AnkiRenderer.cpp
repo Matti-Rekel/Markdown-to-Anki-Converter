@@ -295,17 +295,37 @@ void FieldRenderer::visit(Heading const& node)
     output += "</h" + std::to_string(node.level) + ">";
 }
 
-// TODO:
-// - new lines should be <br>
-// - HTML stuff like < or > should be escaped
 void FieldRenderer::visit(Text const& node)
 {
-    std::string result = node.text;
-    size_t pos = 0;
-    while ((pos = result.find('\n', pos)) != std::string::npos)
+    std::string result;
+    result.reserve(node.text.size());
+
+    for (char c : node.text)
     {
-        result.replace(pos, 1, "<br>");
-        pos += 4; // length of "<br>"
+        switch (c)
+        {
+        case '&':
+            result += "&amp;";
+            break;
+        case '<':
+            result += "&lt;";
+            break;
+        case '>':
+            result += "&gt;";
+            break;
+        case '"':
+            result += "&quot;";
+            break;
+        case '\'':
+            result += "&#39;";
+            break;
+        case '\n':
+            result += "<br>";
+            break;
+        default:
+            result += c;
+            break;
+        }
     }
 
     output += result;
