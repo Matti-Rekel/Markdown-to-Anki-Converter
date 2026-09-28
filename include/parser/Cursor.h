@@ -1,0 +1,38 @@
+#pragma once
+
+#include <string_view>
+
+struct Range
+{
+    size_t start;
+    size_t end;
+};
+
+class Cursor
+{
+  public:
+    explicit Cursor(std::string_view content_);
+
+    auto get_position() const -> size_t;
+    auto change_position_to(size_t pos_) -> void;
+    auto get_size() const -> size_t;
+    auto is_end_of() const -> bool;
+
+    auto advance(std::size_t count = 1) -> void;
+
+    auto peek_line() const -> std::string_view;
+    auto consume_line() -> std::string_view;
+    auto is_empty_line() const -> bool;
+
+    auto peek_range(size_t range) const -> std::string_view;
+    auto starts_with(std::string_view text) const -> bool;
+    auto consume_range(size_t range) -> std::string_view;
+
+    auto get_content() const -> std::string_view;
+    auto at(size_t pos_) const -> char;
+
+  private:
+    std::string_view content;
+    size_t pos = 0;
+    size_t size;
+};

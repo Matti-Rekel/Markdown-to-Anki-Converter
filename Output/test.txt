@@ -1,0 +1,9 @@
+#separator:;
+#notetype:Basic
+#html:true
+#deck column:1
+#notetype column:2
+#tags column:3
+#guid column:4
+
+"imported Cards";"Automatic_Basic";"";"";"<h2>first<br></h2>";"<p>Mathe: \(a^2\) und Code <kdb>a</kdb><br>und eine weitere Zeile.</p>"
