@@ -196,7 +196,6 @@ auto AnkiRenderer::render(Document const& node) -> std::string
         card.cardType = CardParser::determine_cardType(card);
 
         output += render_card(card);
-        output += '\n';
     }
 
     return output;
@@ -207,11 +206,11 @@ auto AnkiRenderer::render_card(Card const& card) -> std::string
     {
     case CardType::Basic:
     {
-        return render_basic_card(card);
+        return render_basic_card(card) + "\n";
     }
     case CardType::Cloze:
     {
-        return render_cloze_card(card);
+        return render_cloze_card(card) + "\n";
     }
     }
     return {};
