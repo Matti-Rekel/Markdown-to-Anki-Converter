@@ -6,6 +6,7 @@ class Heading;
 class Text;
 class InlineMath;
 class InlineCode;
+class InlineStrong;
 
 class Visitor
 {
@@ -18,4 +19,5 @@ class Visitor
     virtual void visit(Text const& node) = 0;
     virtual void visit(InlineMath const& node) = 0;
     virtual void visit(InlineCode const& node) = 0;
+    virtual void visit(InlineStrong const& node) = 0;
 };

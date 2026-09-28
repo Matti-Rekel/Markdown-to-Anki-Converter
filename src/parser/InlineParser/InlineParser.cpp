@@ -1,6 +1,7 @@
 #include "parser/InlineParser/InlineParser.h"
 #include "parser/InlineParser/InlineCodeParser.h"
 #include "parser/InlineParser/InlineMathParser.h"
+#include "parser/InlineParser/InlineStrongParser.h"
 #include <memory>
 
 auto InlineParser::parse_inline(Cursor& cursor) -> std::unique_ptr<Inline>
@@ -11,13 +12,17 @@ auto InlineParser::parse_inline(Cursor& cursor) -> std::unique_ptr<Inline>
     {
         return InlineCodeParser::parse(cursor);
     }
+    if (InlineStrongParser::is_inlineStrong(cursor))
+    {
+        return InlineStrongParser::parse(cursor);
+    }
 
     return TextParser::parse(cursor);
 }
 auto InlineParser::starts_inline(Cursor cursor) -> bool
 {
-    return InlineMathParser::is_inlineMath(cursor) ||
-           InlineCodeParser::is_inlineCode(cursor); // In Case of expansion this line needs to be expanded.
+    return InlineMathParser::is_inlineMath(cursor) || InlineCodeParser::is_inlineCode(cursor) ||
+           InlineStrongParser::is_inlineStrong(cursor); // In Case of expansion this line needs to be expanded.
 }
 auto TextParser::parse(Cursor& cursor) -> std::unique_ptr<Text>
 {

@@ -343,3 +343,13 @@ void FieldRenderer::visit(InlineCode const& node)
     output += node.code;
     output += "</kdb>";
 }
+void FieldRenderer::visit(InlineStrong const& node)
+{
+    output += "<strong>";
+
+    for (auto const& child : node.children)
+    {
+        child->accept(*this);
+    }
+    output += "</strong>";
+}

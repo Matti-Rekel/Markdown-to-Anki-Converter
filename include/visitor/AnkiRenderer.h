@@ -84,6 +84,7 @@ class FieldRenderer : public Visitor
     void visit(Text const& node) override;
     void visit(InlineMath const& node) override;
     void visit(InlineCode const& node) override;
+    void visit(InlineStrong const& node) override;
 
   private:
     std::string output;

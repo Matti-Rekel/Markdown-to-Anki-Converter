@@ -3,6 +3,8 @@ add_executable(MarkdownParserTests
     ParserTests.cpp
     BlockParserTests.cpp
     InlineParserTests.cpp
+
+    InlineParserTests/InlineStrongParser.cpp
 )
 
 target_link_libraries(MarkdownParserTests

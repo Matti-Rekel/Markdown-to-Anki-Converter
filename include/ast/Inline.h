@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Node.h"
+#include <memory>
 #include <string>
+#include <vector>
 
 // Extension: if you want a new Inline you need to change/add:
 // - starts_inline
@@ -36,6 +38,14 @@ class InlineCode : public Inline
 {
   public:
     std::string code;
+
+    void accept(Visitor& visitor) const override { visitor.visit(*this); }
+};
+
+class InlineStrong : public Inline
+{
+  public:
+    std::vector<std::unique_ptr<Inline>> children;
 
     void accept(Visitor& visitor) const override { visitor.visit(*this); }
 };
