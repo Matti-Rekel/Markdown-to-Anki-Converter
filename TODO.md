@@ -1,7 +1,6 @@
 # TODO
 
 ## Features:
-- Strong inline
 - emphasis inline
 - Code Blocks
 - Math Blocks
@@ -12,3 +11,4 @@
 - Links
 
 ## Changes/Fixes:
+- Blocks or inlines which are just started and never ended do not count as starting a new one (this could be implemented by testing whether the construct range would be greater than 0 and reworking that function)
