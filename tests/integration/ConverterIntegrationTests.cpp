@@ -111,5 +111,5 @@ TEST(ConverterIntegrationTests, MarkdownToCardExample)
     AnkiRenderer renderer;
     auto output = renderer.render(document);
 
-    EXPECT_EQ(output, "\"imported Cards\";\"Automatic_Basic\";\"\";\"\";\"<h2>Frage</h2>\";\"<p>Antwort</p>\"");
+    EXPECT_EQ(output, "\"imported Cards\";\"Automatic_Basic\";\"\";\"\";\"<h2>Frage</h2>\";\"<p>Antwort</p>\"\n");
 }
