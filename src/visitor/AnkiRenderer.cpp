@@ -331,6 +331,13 @@ void FieldRenderer::visit(Text const& node)
     output += result;
 }
 
+void FieldRenderer::visit(BlockCode const& node)
+{
+    output += "<pre><code>";
+    output += node.code;
+    output += "</code></pre>";
+}
+
 void FieldRenderer::visit(InlineMath const& node)
 {
     output += "\\(";

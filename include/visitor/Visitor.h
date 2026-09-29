@@ -3,6 +3,8 @@
 class Document;
 class Paragraph;
 class Heading;
+class BlockCode;
+
 class Text;
 class InlineMath;
 class InlineCode;
@@ -16,6 +18,7 @@ class Visitor
 
     virtual void visit(Paragraph const& node) = 0;
     virtual void visit(Heading const& node) = 0;
+    virtual void visit(BlockCode const& node) = 0;
 
     virtual void visit(Text const& node) = 0;
     virtual void visit(InlineMath const& node) = 0;

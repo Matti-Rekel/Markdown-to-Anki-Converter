@@ -1,7 +1,6 @@
 # TODO
 
 ## Features:
-- Code Blocks
 - Math Blocks
 - Cloze inline
 - Cloze Card

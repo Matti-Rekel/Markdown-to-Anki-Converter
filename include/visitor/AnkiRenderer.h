@@ -83,6 +83,8 @@ class FieldRenderer : public Visitor
     void visit(Paragraph const& node) override;
     void visit(Heading const& node) override;
     void visit(Text const& node) override;
+    void visit(BlockCode const& node) override;
+
     void visit(InlineMath const& node) override;
     void visit(InlineCode const& node) override;
     void visit(InlineStrong const& node) override;
