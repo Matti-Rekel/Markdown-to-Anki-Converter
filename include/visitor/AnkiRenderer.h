@@ -60,6 +60,33 @@ class CardParser
     static auto field_contains_cloze(Field const& field) -> bool;
 };
 
+class ClozeDetector : public Visitor
+{
+  public:
+    auto contains_cloze() const -> bool;
+
+    void visit(BlockCloze const&) override;
+
+    void visit(InlineCloze const&) override;
+
+    void visit(Paragraph const& node) override;
+
+    void visit(Heading const& node) override;
+
+    void visit(InlineStrong const& node) override;
+
+    void visit(InlineEmphasis const& node) override;
+
+    void visit(Text const&) override {}
+    void visit(BlockCode const&) override {}
+    void visit(BlockMath const&) override {}
+    void visit(InlineMath const&) override {}
+    void visit(InlineCode const&) override {}
+
+  private:
+    bool found = false;
+};
+
 class AnkiRenderer
 {
   public:
@@ -85,12 +112,15 @@ class FieldRenderer : public Visitor
     void visit(Text const& node) override;
     void visit(BlockCode const& node) override;
     void visit(BlockMath const& node) override;
+    void visit(BlockCloze const& node) override;
 
     void visit(InlineMath const& node) override;
     void visit(InlineCode const& node) override;
     void visit(InlineStrong const& node) override;
     void visit(InlineEmphasis const& node) override;
+    void visit(InlineCloze const& node) override;
 
   private:
     std::string output;
+    size_t clozeCount = 1;
 };

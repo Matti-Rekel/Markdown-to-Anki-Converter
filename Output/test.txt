@@ -6,8 +6,7 @@
 #tags column:3
 #guid column:4
 
-
-"imported Cards";"Automatic_Basic";"";"";"<h2>first</h2>";"<p>Mathe: \(a^2\) und Code <kdb>a</kdb><br>und eine weitere Zeile.</p>"
+"imported Cards";"Automatic_Cloze";"";"";"<h2>first</h2><p>Mathe: \(a^2\) und Code <kdb>a</kdb><br>und eine {{c1::weitere}} Zeile.</p>{{c2::<p>oder Gleich ein ganzer Paragraph</p>}}";""
 "imported Cards";"Automatic_Basic";"";"";"<h2>Und noch weitere Fragen</h2>";"<p>Ist <strong>Wasser</strong> nass?</p><p>Die Antwort lautet <em>Ja</em>.</p><pre><code>code
     und Tabs
 </code></pre><p>Oder Mathe</p>\[ a^2 \]"

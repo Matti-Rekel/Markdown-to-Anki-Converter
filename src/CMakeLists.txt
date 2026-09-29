@@ -13,6 +13,7 @@ add_library(MarkdownParser
     parser/BlockParser/BlockParagraphParser.cpp
     parser/BlockParser/BlockCodeParser.cpp
     parser/BlockParser/BlockMathParser.cpp
+    parser/BlockParser/BlockClozeParser.cpp
 
     parser/InlineParser/InlineParser.cpp
     parser/InlineParser/InlineMathParser.cpp
@@ -20,6 +21,7 @@ add_library(MarkdownParser
     parser/InlineParser/InlineCodeParser.cpp
     parser/InlineParser/InlineStrongParser.cpp
     parser/InlineParser/InlineEmphasisParser.cpp
+    parser/InlineParser/InlineClozeParser.cpp
 )
 
 target_include_directories(MarkdownParser PUBLIC

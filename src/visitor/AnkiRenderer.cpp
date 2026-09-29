@@ -6,6 +6,7 @@
 #include <iostream>
 #include <map>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 auto CardParser::determine_fieldType(const Field& field, std::map<std::string, FieldType> keywordMap) -> FieldType
@@ -59,7 +60,16 @@ auto CardParser::determine_keyword_in_heading(Heading const& heading, std::map<s
 
 auto CardParser::field_contains_cloze(Field const& field) -> bool
 {
-    // TODO: Expand once Clozes are introduced in the AST
+    ClozeDetector detector;
+
+    for (auto const* node : field.children)
+    {
+        node->accept(detector);
+
+        if (detector.contains_cloze())
+            return true;
+    }
+
     return false;
 }
 
@@ -185,6 +195,37 @@ auto CardParser::consume_field(Document const& document, std::size_t& i) -> Fiel
 
     return result;
 }
+
+auto ClozeDetector::contains_cloze() const -> bool { return found; }
+
+void ClozeDetector::visit(BlockCloze const&) { found = true; }
+
+void ClozeDetector::visit(InlineCloze const&) { found = true; }
+
+void ClozeDetector::visit(Paragraph const& node)
+{
+    for (auto const& child : node.children)
+        child->accept(*this);
+}
+
+void ClozeDetector::visit(Heading const& node)
+{
+    for (auto const& child : node.children)
+        child->accept(*this);
+}
+
+void ClozeDetector::visit(InlineStrong const& node)
+{
+    for (auto const& child : node.children)
+        child->accept(*this);
+}
+
+void ClozeDetector::visit(InlineEmphasis const& node)
+{
+    for (auto const& child : node.children)
+        child->accept(*this);
+}
+
 AnkiRenderer::AnkiRenderer(Document const& document) { render(document); }
 
 auto AnkiRenderer::render(Document const& node) -> std::string
@@ -218,12 +259,12 @@ auto AnkiRenderer::render_card(Card const& card) -> std::string
 
 auto AnkiRenderer::render_basic_card(Card const& card) -> std::string
 {
-    FieldRenderer fieldRenderer;
     std::string question;
     std::string answer;
 
     for (auto const& field : card.fields)
     {
+        FieldRenderer fieldRenderer;
         switch (field.fieldType)
         {
         case FieldType::Question:
@@ -257,7 +298,51 @@ auto AnkiRenderer::render_basic_card(Card const& card) -> std::string
     return result;
 }
 
-auto AnkiRenderer::render_cloze_card(Card const& card) -> std::string { return {}; }
+auto AnkiRenderer::render_cloze_card(Card const& card) -> std::string
+{
+    std::string question;
+    std::string answer;
+
+    for (auto const& field : card.fields)
+    {
+        FieldRenderer fieldRenderer;
+        switch (field.fieldType)
+        {
+        case FieldType::Question:
+        {
+            question += fieldRenderer.render(field);
+            break;
+        }
+        case FieldType::Cloze:
+        {
+            question += fieldRenderer.render(field);
+            break;
+        }
+        default:
+        {
+            answer += fieldRenderer.render(field);
+            break;
+        }
+        }
+    }
+
+    std::string result;
+
+    result += "\"imported Cards\";";
+    result += "\"Automatic_Cloze\";";
+    result += "\"\";";
+    result += "\"\";";
+
+    result += '"';
+    result += question;
+    result += "\";";
+
+    result += '"';
+    result += answer;
+    result += "\"";
+
+    return result;
+}
 
 auto FieldRenderer::render(Field const& field) -> std::string
 {
@@ -344,6 +429,19 @@ void FieldRenderer::visit(BlockMath const& node)
     output += node.equation;
     output += "\\]";
 }
+void FieldRenderer::visit(BlockCloze const& node)
+{
+    output += "{{c";
+    output += std::to_string(clozeCount);
+    output += "::";
+
+    for (auto const& child : node.children)
+    {
+        child->accept(*this);
+    }
+    output += "}}";
+    clozeCount++;
+}
 
 void FieldRenderer::visit(InlineMath const& node)
 {
@@ -376,4 +474,19 @@ void FieldRenderer::visit(InlineEmphasis const& node)
         child->accept(*this);
     }
     output += "</em>";
+}
+
+void FieldRenderer::visit(InlineCloze const& node)
+{
+
+    output += "{{c";
+    output += std::to_string(clozeCount);
+    output += "::";
+
+    for (auto const& child : node.children)
+    {
+        child->accept(*this);
+    }
+    output += "}}";
+    clozeCount++;
 }

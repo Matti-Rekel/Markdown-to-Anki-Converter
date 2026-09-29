@@ -1,6 +1,7 @@
 #include "parser/BlockParser/BlockParagraphParser.h"
 #include "parser/BlockParser/BlockParser.h"
 #include "parser/InlineParser/InlineParser.h"
+#include <iostream>
 
 // TODO:
 // - If there is a completly empty line between a new Paragraph should be created and the empty line should be part of
@@ -54,16 +55,14 @@ auto ParagraphParser::determine_construct_range(Cursor cursor) -> Range
 
 auto ParagraphParser::determine_content_range(Cursor cursor, Range constructRange) -> Range
 {
-    Range result;
-    result.start = constructRange.start;
+    Range result{
+        .start = constructRange.start,
+        .end = constructRange.end,
+    };
 
-    if (cursor.at(result.end - 1) == '\n')
+    if (result.end > result.start && cursor.at(result.end - 1) == '\n')
     {
-        result.end = constructRange.end - 1;
-    }
-    else
-    {
-        result.end = constructRange.end;
+        --result.end;
     }
 
     return result;

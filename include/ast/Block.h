@@ -56,3 +56,11 @@ class BlockMath : public Block
 
     void accept(Visitor& visitor) const override { visitor.visit(*this); }
 };
+
+class BlockCloze : public Block
+{
+  public:
+    std::vector<std::unique_ptr<Block>> children;
+
+    void accept(Visitor& visitor) const override { visitor.visit(*this); }
+};

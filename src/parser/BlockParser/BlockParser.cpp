@@ -1,5 +1,6 @@
 #include "parser/BlockParser/BlockParser.h"
 #include "ast/Block.h"
+#include "parser/BlockParser/BlockClozeParser.h"
 #include "parser/BlockParser/BlockCodeParser.h"
 #include "parser/BlockParser/BlockHeadingParser.h"
 #include "parser/BlockParser/BlockMathParser.h"
@@ -16,6 +17,8 @@ auto BlockParser::parse_block(Cursor& cursor) -> std::unique_ptr<Block>
         return BlockCodeParser::parse(cursor);
     if (BlockMathParser::is_blockMath(cursor))
         return BlockMathParser::parse(cursor);
+    if (BlockClozeParser::is_blockCloze(cursor))
+        return BlockClozeParser::parse(cursor);
 
     return ParagraphParser::parse(cursor);
 }
@@ -23,5 +26,5 @@ auto BlockParser::parse_block(Cursor& cursor) -> std::unique_ptr<Block>
 auto BlockParser::starts_block(Cursor cursor) -> bool
 {
     return HeadingParser::is_blockHeading(cursor) || BlockCodeParser::is_blockCode(cursor) ||
-           BlockMathParser::is_blockMath(cursor);
+           BlockMathParser::is_blockMath(cursor) || BlockClozeParser::is_blockCloze(cursor);
 }

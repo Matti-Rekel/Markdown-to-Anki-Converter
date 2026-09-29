@@ -57,3 +57,11 @@ class InlineEmphasis : public Inline
 
     void accept(Visitor& visitor) const override { visitor.visit(*this); }
 };
+
+class InlineCloze : public Inline
+{
+  public:
+    std::vector<std::unique_ptr<Inline>> children;
+
+    void accept(Visitor& visitor) const override { visitor.visit(*this); }
+};
