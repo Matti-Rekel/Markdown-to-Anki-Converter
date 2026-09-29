@@ -17,6 +17,7 @@ add_library(MarkdownParser
     parser/InlineParser/InlineTextParser.cpp
     parser/InlineParser/InlineCodeParser.cpp
     parser/InlineParser/InlineStrongParser.cpp
+    parser/InlineParser/InlineEmphasisParser.cpp
 )
 
 target_include_directories(MarkdownParser PUBLIC

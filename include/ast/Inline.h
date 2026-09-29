@@ -49,3 +49,11 @@ class InlineStrong : public Inline
 
     void accept(Visitor& visitor) const override { visitor.visit(*this); }
 };
+
+class InlineEmphasis : public Inline
+{
+  public:
+    std::vector<std::unique_ptr<Inline>> children;
+
+    void accept(Visitor& visitor) const override { visitor.visit(*this); }
+};

@@ -3,6 +3,7 @@
 #include "Visitor.h"
 #include "ast/Block.h"
 #include "ast/Document.h"
+#include "ast/Inline.h"
 
 #include <map>
 #include <string>
@@ -85,6 +86,7 @@ class FieldRenderer : public Visitor
     void visit(InlineMath const& node) override;
     void visit(InlineCode const& node) override;
     void visit(InlineStrong const& node) override;
+    void visit(InlineEmphasis const& node) override;
 
   private:
     std::string output;

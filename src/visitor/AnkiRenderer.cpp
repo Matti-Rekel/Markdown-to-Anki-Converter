@@ -353,3 +353,13 @@ void FieldRenderer::visit(InlineStrong const& node)
     }
     output += "</strong>";
 }
+void FieldRenderer::visit(InlineEmphasis const& node)
+{
+    output += "<em>";
+
+    for (auto const& child : node.children)
+    {
+        child->accept(*this);
+    }
+    output += "</em>";
+}

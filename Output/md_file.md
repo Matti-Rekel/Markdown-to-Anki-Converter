@@ -7,4 +7,4 @@ und eine weitere Zeile.
 
 Ist **Wasser** nass?
 
-Die Antwort lautet Ja.
+Die Antwort lautet *Ja*.
