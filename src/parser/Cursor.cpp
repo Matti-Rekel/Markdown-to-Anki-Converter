@@ -71,3 +71,22 @@ auto Cursor::consume_range(size_t range) -> std::string_view
 auto Cursor::get_content() const -> std::string_view { return content; }
 
 auto Cursor::at(size_t pos_) const -> char { return content.at(pos_); }
+
+auto Cursor::get_indentation() const -> std::size_t
+{
+    std::size_t lineStart = pos;
+
+    while (lineStart > 0 && content[lineStart - 1] != '\n')
+    {
+        --lineStart;
+    }
+
+    std::size_t indentation = 0;
+
+    while (lineStart + indentation < content.size() && content[lineStart + indentation] == ' ')
+    {
+        ++indentation;
+    }
+
+    return indentation;
+}

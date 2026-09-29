@@ -464,6 +464,41 @@ void FieldRenderer::visit(BlockCloze const& node)
     clozeCount++;
 }
 
+void FieldRenderer::visit(ListItem const& node)
+{
+    output += "<li>";
+
+    for (auto const& child : node.children)
+    {
+        child->accept(*this);
+    }
+    output += "</li>";
+}
+
+void FieldRenderer::visit(List const& node)
+{
+    if (node.ordered)
+    {
+        output += "<ol>";
+
+        for (auto const& child : node.children)
+        {
+            child->accept(*this);
+        }
+        output += "</ol>";
+    }
+    else
+    {
+        output += "<ul>";
+
+        for (auto const& child : node.children)
+        {
+            child->accept(*this);
+        }
+        output += "</ul>";
+    }
+}
+
 void FieldRenderer::visit(InlineMath const& node)
 {
     output += "\\(";

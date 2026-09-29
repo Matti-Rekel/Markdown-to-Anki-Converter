@@ -5,8 +5,4 @@
 #tags column:3
 #guid column:4
 
-"imported Cards";"Automatic_Cloze";"";"";"<h2>first</h2><p>Mathe: \(a^2\) und Code <kdb>a</kdb><br>und eine {{c1::weitere}} Zeile.</p>{{c2::<p>oder Gleich ein ganzer Paragraph</p>}}";""
-"imported Cards";"Automatic_Basic";"";"";"<h2>Und noch weitere Fragen</h2>";"<p>Ist <strong>Wasser</strong> nass?</p><p>Die Antwort lautet <em>Ja</em>.</p><pre><code>code
-    und Tabs
-</code></pre><p>Oder Mathe</p>\[ a^2 \]<details><summary><h3>Zusatz Informationen</h3></summary><p>bla bla bla.</p></details>"
-"imported Cards";"Automatic_Basic";"";"";"<h2>Test</h2>";"<p>SO sind wir fertig oder was?</p><details><summary><h3>Fertig?</h3></summary><p><strong>Ja, fertig</strong></p></details><details><summary><h3>Wie ist es mit mehreren Extra Feldern?</h3></summary><p>Gut oder Schlecht.</p></details>"
+"imported Cards";"Automatic_Basic";"";"";"<h2>Lists</h2>";"<ul><li><p>unorderd Lists</p><ul><li><p>nested</p></li></ul></li><li><p>second entry</p></li><li><p>third</p></li><li><p>fourth</p></li></ul><ol><li><p>ordered List</p><ol><li><p>indeted</p></li></ol></li><li><p>second enty</p></li><li><p>drei </p></li><li><p>vier</p></li></ol>"

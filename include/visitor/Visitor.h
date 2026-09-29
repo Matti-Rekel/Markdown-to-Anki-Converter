@@ -6,6 +6,8 @@ class Heading;
 class BlockCode;
 class BlockMath;
 class BlockCloze;
+class ListItem;
+class List;
 
 class Text;
 class InlineMath;
@@ -24,6 +26,8 @@ class Visitor
     virtual void visit(BlockCode const& node) = 0;
     virtual void visit(BlockMath const& node) = 0;
     virtual void visit(BlockCloze const& node) = 0;
+    virtual void visit(ListItem const& node) = 0;
+    virtual void visit(List const& node) = 0;
 
     virtual void visit(Text const& node) = 0;
     virtual void visit(InlineMath const& node) = 0;

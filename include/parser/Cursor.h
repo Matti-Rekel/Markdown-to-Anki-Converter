@@ -30,6 +30,7 @@ class Cursor
 
     auto get_content() const -> std::string_view;
     auto at(size_t pos_) const -> char;
+    auto get_indentation() const -> std::size_t;
 
   private:
     std::string_view content;

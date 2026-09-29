@@ -64,3 +64,20 @@ class BlockCloze : public Block
 
     void accept(Visitor& visitor) const override { visitor.visit(*this); }
 };
+
+class ListItem : public Block
+{
+  public:
+    std::vector<std::unique_ptr<Block>> children;
+
+    void accept(Visitor& visitor) const override { visitor.visit(*this); }
+};
+
+class List : public Block
+{
+  public:
+    bool ordered = false;
+    std::vector<std::unique_ptr<ListItem>> children;
+
+    void accept(Visitor& visitor) const override { visitor.visit(*this); }
+};

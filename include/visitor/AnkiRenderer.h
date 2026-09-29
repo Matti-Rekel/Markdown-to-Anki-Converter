@@ -81,6 +81,8 @@ class ClozeDetector : public Visitor
     void visit(Text const&) override {}
     void visit(BlockCode const&) override {}
     void visit(BlockMath const&) override {}
+    void visit(ListItem const&) override {}
+    void visit(List const&) override {}
     void visit(InlineMath const&) override {}
     void visit(InlineCode const&) override {}
 
@@ -114,6 +116,8 @@ class FieldRenderer : public Visitor
     void visit(BlockCode const& node) override;
     void visit(BlockMath const& node) override;
     void visit(BlockCloze const& node) override;
+    void visit(ListItem const& node) override;
+    void visit(List const& node) override;
 
     void visit(InlineMath const& node) override;
     void visit(InlineCode const& node) override;

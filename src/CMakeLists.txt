@@ -14,6 +14,7 @@ add_library(MarkdownParser
     parser/BlockParser/BlockCodeParser.cpp
     parser/BlockParser/BlockMathParser.cpp
     parser/BlockParser/BlockClozeParser.cpp
+    parser/BlockParser/BlockListParser.cpp
 
     parser/InlineParser/InlineParser.cpp
     parser/InlineParser/InlineMathParser.cpp
