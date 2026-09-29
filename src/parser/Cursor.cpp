@@ -42,6 +42,9 @@ auto Cursor::peek_line() const -> std::string_view
 }
 auto Cursor::is_empty_line() const -> bool
 {
+    if (is_end_of())
+        return false;
+
     auto position = get_position();
 
     while (position < content.size() && content[position] != '\n')

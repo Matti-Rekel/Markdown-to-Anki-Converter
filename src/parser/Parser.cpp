@@ -11,6 +11,7 @@ auto Parser::parse(std::string_view source) -> Document
     {
         while (cursor.is_empty_line())
         {
+            // std::cout << "skip emtpty line" << std::endl;
             cursor.consume_line();
         }
 

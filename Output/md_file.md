@@ -12,3 +12,6 @@ Die Antwort lautet *Ja*.
 code
     und Tabs
 ```
+
+Oder Mathe
+$$ a^2 $$

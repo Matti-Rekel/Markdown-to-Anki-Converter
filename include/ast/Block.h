@@ -48,3 +48,11 @@ class BlockCode : public Block
 
     void accept(Visitor& visitor) const override { visitor.visit(*this); }
 };
+
+class BlockMath : public Block
+{
+  public:
+    std::string equation;
+
+    void accept(Visitor& visitor) const override { visitor.visit(*this); }
+};
