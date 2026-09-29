@@ -51,7 +51,7 @@ auto CardParser::determine_keyword_in_heading(Heading const& heading, std::map<s
             }
             else
             {
-                return FieldType::Answer;
+                return FieldType::Extra;
             }
         }
     }
@@ -270,6 +270,27 @@ auto AnkiRenderer::render_basic_card(Card const& card) -> std::string
         case FieldType::Question:
         {
             question += fieldRenderer.render(field);
+            break;
+        }
+        case FieldType::Answer:
+        {
+            answer += fieldRenderer.render(field);
+            break;
+        }
+        case FieldType::Extra:
+        {
+            Field heading;
+            heading.children.push_back(field.children.at(0));
+            Field rest;
+            for (size_t i = 1; i < field.children.size(); i++)
+            {
+                rest.children.push_back(field.children.at(i));
+            }
+            answer += "<details><summary>";
+            answer += fieldRenderer.render(heading); // content of Heading
+            answer += "</summary>";
+            answer += fieldRenderer.render(rest); // after heading
+            answer += "</details>";
             break;
         }
         default:

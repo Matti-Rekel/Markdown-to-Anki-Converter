@@ -17,7 +17,8 @@ enum class FieldType
 {
     Question,
     Answer,
-    Cloze
+    Cloze,
+    Extra
 };
 
 // Extension: If you want a new CardType to be supported you need to add/change:

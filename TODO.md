@@ -1,7 +1,7 @@
 # TODO
 
 ## Features:
-- Multiple fields ( just take whatever there is in the heading and use that as a summary)
+- Write to File
 - Images
 - Links
 
