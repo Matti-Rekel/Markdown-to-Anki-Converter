@@ -73,6 +73,8 @@ class ClozeDetector : public Visitor
     void visit(Paragraph const& node) override;
 
     void visit(Heading const& node) override;
+    void visit(ListItem const&) override;
+    void visit(List const&) override;
 
     void visit(InlineStrong const& node) override;
 
@@ -81,8 +83,6 @@ class ClozeDetector : public Visitor
     void visit(Text const&) override {}
     void visit(BlockCode const&) override {}
     void visit(BlockMath const&) override {}
-    void visit(ListItem const&) override {}
-    void visit(List const&) override {}
     void visit(InlineMath const&) override {}
     void visit(InlineCode const&) override {}
 

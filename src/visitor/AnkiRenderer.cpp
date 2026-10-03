@@ -213,6 +213,17 @@ void ClozeDetector::visit(Heading const& node)
     for (auto const& child : node.children)
         child->accept(*this);
 }
+void ClozeDetector::visit(List const& node)
+{
+    for (auto const& child : node.children)
+        child->accept(*this);
+}
+
+void ClozeDetector::visit(ListItem const& node)
+{
+    for (auto const& child : node.children)
+        child->accept(*this);
+}
 
 void ClozeDetector::visit(InlineStrong const& node)
 {
@@ -392,6 +403,11 @@ void FieldRenderer::visit(Paragraph const& node)
 
 void FieldRenderer::visit(Heading const& node)
 {
+    if (node.level == 1)
+    {
+        return;
+    }
+
     output += "<h" + std::to_string(node.level) + ">";
     for (auto const& child : node.children)
     {
