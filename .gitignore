@@ -70,4 +70,5 @@ Testing/
 # Clang and clangd 
 .clangd
 .clang-format
+.clang-tidy
 Output/*.txt
