@@ -12,6 +12,12 @@
 
 auto BlockParser::parse_block(Cursor& cursor) -> std::unique_ptr<Block>
 {
+    while (cursor.is_empty_line())
+    {
+        // std::cout << "skip emtpty line" << std::endl;
+        cursor.consume_line();
+    }
+
     if (HeadingParser::is_blockHeading(cursor))
         return HeadingParser::parse(cursor);
     if (BlockCodeParser::is_blockCode(cursor))

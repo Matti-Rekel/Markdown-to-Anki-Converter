@@ -10,7 +10,8 @@ class BlockClozeParser
     static auto parse(Cursor& cursor) -> std::unique_ptr<BlockCloze>;
     static auto parse_content(Cursor& cursor) -> std::vector<std::unique_ptr<Block>>;
 
-  private:
+    // Remove the comment later this was just for testing.
+    // private:
     static auto determine_construct_range(Cursor cursor) -> Range;
     static auto determine_content_range(Cursor cursor, Range constructRange) -> Range;
 };

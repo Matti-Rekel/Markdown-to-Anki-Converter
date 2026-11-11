@@ -72,3 +72,6 @@ Testing/
 .clang-format
 .clang-tidy
 Output/*.txt
+
+# Vs Code
+settings.json

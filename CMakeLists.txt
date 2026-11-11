@@ -4,6 +4,8 @@ project(Converter)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include(CTest)
+
 add_subdirectory(src)
 
 include(FetchContent)
@@ -16,6 +18,6 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(googletest)
 
-enable_testing()
-
-add_subdirectory(tests)
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif()

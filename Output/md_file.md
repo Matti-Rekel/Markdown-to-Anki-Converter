@@ -1,13 +1,19 @@
-## Lists
+## Was besagt der folgende Satz aus Stoch.?
 
-- unorderd Lists
-    - nested
-- second entry
-- third
-- fourth
+Satz: __Dominierte Konvergenz, Majorisierte Konvergenz, Satz von Lebesgue__
 
-1. ordered List
-    1. indeted
-2. second enty
-3. drei 
-4. vier
+Vorbedingung:
+___
+Seien $f, f_1, f_2, ...$ messbare Funktionen, so dass:
+- $\lim f_n = f$ $\mu$-f.ü.
+- Es existiert eine integierbare Majorante $g$ (d.h. $g \in \mathcal{L}(\Omega, \mu)$ mit $|f_n| \leq g$ $\mu$-f.ü. $\forall n$)
+___
+
+Dann gilt:
+___
+$$f(x)$$
+___
+Der Math Block verursacht hier ein Problem der Math text nicht...
+
+### Quelle:
+Skript: Satz 2.54

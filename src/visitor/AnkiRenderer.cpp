@@ -3,7 +3,6 @@
 #include "ast/Block.h"
 #include "ast/Document.h"
 #include "ast/Inline.h"
-#include <iostream>
 #include <map>
 #include <stdexcept>
 #include <string>
@@ -350,6 +349,22 @@ auto AnkiRenderer::render_cloze_card(Card const& card) -> std::string
             question += fieldRenderer.render(field);
             break;
         }
+        case FieldType::Extra:
+        {
+            Field heading;
+            heading.children.push_back(field.children.at(0));
+            Field rest;
+            for (size_t i = 1; i < field.children.size(); i++)
+            {
+                rest.children.push_back(field.children.at(i));
+            }
+            answer += "<details><summary>";
+            answer += fieldRenderer.render(heading); // content of Heading
+            answer += "</summary>";
+            answer += fieldRenderer.render(rest); // after heading
+            answer += "</details>";
+            break;
+        }
         default:
         {
             answer += fieldRenderer.render(field);
@@ -466,6 +481,7 @@ void FieldRenderer::visit(BlockMath const& node)
     output += node.equation;
     output += "\\]";
 }
+
 void FieldRenderer::visit(BlockCloze const& node)
 {
     output += "{{c";
@@ -521,12 +537,14 @@ void FieldRenderer::visit(InlineMath const& node)
     output += node.equation;
     output += "\\)";
 }
+
 void FieldRenderer::visit(InlineCode const& node)
 {
     output += "<kdb>";
     output += node.code;
     output += "</kdb>";
 }
+
 void FieldRenderer::visit(InlineStrong const& node)
 {
     output += "<strong>";
@@ -537,6 +555,7 @@ void FieldRenderer::visit(InlineStrong const& node)
     }
     output += "</strong>";
 }
+
 void FieldRenderer::visit(InlineEmphasis const& node)
 {
     output += "<em>";

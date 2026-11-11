@@ -6,6 +6,7 @@ add_executable(MarkdownParserTests
 
     BlockParserTests/BlockCodeParser.cpp
     BlockParserTests/BlockMathParser.cpp
+    BlockParserTests/BlockClozeParser.cpp
 
     InlineParserTests/InlineStrongParser.cpp
     InlineParserTests/InlineEmphasisParser.cpp

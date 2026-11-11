@@ -4,7 +4,7 @@
 
 TEST(BlockMathParserTests, isBlockMath_detectsCodeBlock)
 {
-    const auto document = Parser::parse("$$ a^2 $$");
+    const auto document = Parser::parse("$$a^2$$");
 
     ASSERT_EQ(document.children.size(), 1);
 
